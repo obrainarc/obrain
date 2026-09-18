@@ -1,0 +1,19 @@
+# Do not rename src/ImmortalFruitFlies.sol, src/ImmortalFruitFliesTape.sol or
+# their contracts: solc hashes both the path and the contract name into the
+# metadata suffix of the deployed bytecode, so a rename produces different
+# runtime code and orphans the on-chain sources (Sourcify exact_match for
+# 0xF5c8036d95D6C53Ef8aC2370dF79838Fa6B8a1A1). See README "Naming".
+
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+solc_version = "0.8.28"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+evm_version = "cancun"
+verbosity = 2
+gas_limit = "50000000000"
+fs_permissions = [{ access = "read", path = "./tapes" }]
