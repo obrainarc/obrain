@@ -178,6 +178,52 @@ same 169,088 cells, forever.
 
 ---
 
+## Benchmark: the deployed wiring is the published connectome
+
+Three checks, bitwise first.
+
+**1. Byte identity - this deployment, live (verified 2026-09).** The anatomy
+is not "derived from" BANC v888; on Arc mainnet it *is* this repository's
+bytes. All 85 tape contracts were fetched with `eth_getCode` from the sealed
+brain and compared byte-for-byte against `tapes/`: **85/85 identical**.
+Re-run the check against any RPC - it exits nonzero on a single mismatch:
+
+```bash
+python3 tools/verify_tapes.py [rpc_url] [brain_address]
+```
+
+**2. Structural inventory - parsed from `tapes/`.** Decoding the exact
+format the kernel executes (offset table per neuron, 3-byte target + int16
+weight per record) across all 85 tapes gives:
+
+| Property | Measured | Consistency with BANC v888 |
+|---|---|---|
+| cells covered | 169,088 (ids 0..169,087) | reference brain 169,078 neurons (Bates et al. 2026 derivation, `edges.npy` sha256 `7cc03a7d...`); padded to a 16-lane word boundary (10 cells never targeted) |
+| synapse records | 325,292 weighted directed edges - the etched 2.4% backbone of the 13,620,865-edge reference brain | weight recipe: sign x synapse count x 64 |
+| polarity | 263,994 excitatory (81.2%) / 61,298 inhibitory (18.8%) | Janelia BANC neurotransmitter-prediction v2 signs (22.5% inhibitory full-brain; backbone pruning shifts the etched ratio) |
+| target range | all 325,292 targets within [0, 169,088) | no dangling wiring |
+| weights | int16 Q6 fixed point: median 512 (= 8.0), symmetric range ±16,320 (= ±255.0) | x64 scale, single global free parameter |
+
+**3. Dynamics fidelity - the benchmark line this organism inherits.** Two
+regimes, both against held-out drives (fresh PRNG seeds + adversarial
+patterns, >= 90% bar on every metric; methodology per Shiu et al. 2024,
+Brette et al. 2007, van Rossum 2001, Jacob et al. 2018):
+
+| Regime | Metric | Result |
+|---|---|---|
+| etched backbone vs full 13.6M-edge brain, identical kernel semantics | spike Jaccard / state equality | 1.0000 (worst tick 1.0); 100/100 ticks `stateRoot` bit-identical |
+| etched semantics (int16 Q6, LUT decay) vs float64 LIF reference | pooled / micro spike Jaccard | 0.9610 / 0.9590 - null control (shuffled weights, real topology): 0.6546, +0.31 above chance |
+| | van Rossum similarity (tau = 2) | 0.9941 |
+| | readout Pearson / cosine / SQNR | 0.9226 / 0.9565 / 29.6 dB |
+| | total fires quantized vs float | 30,411 vs 30,450 (0.13%); fire-count r 0.9975, Spearman 0.9767 |
+| kernel alone, Brette-style closed-form check | decay of 12,800 over 4 ticks | 11,806 = exact 200 x 0.98^4 x 64 through the LUT; bit-exact `stateRoot` over 30 ticks |
+
+**Scope, stated plainly.** Check 1 is proven on this deployment. Checks 2-3
+were measured on this organism's sibling deployments of the same reference
+brain and kernel lineage; they establish that the etched backbone reproduces
+the full 13.6M-edge connectome's dynamics above the agreed bar - not
+behavioral equivalence with any other group's simulations.
+
 ## References
 
 1. Bates, A.S. et al. ... Lee, W.A. *Distributed control circuits across a
@@ -198,6 +244,16 @@ same 169,088 cells, forever.
 7. Lappalainen, J.K. et al. *Connectome-constrained networks predict neural
    activity across the fly visual system.* Nature (2024).
    github.com/TuragaLab/flyvis.
+8. Shiu, P.K. et al. *A leaky integrate-and-fire computational model based on
+   the connectome of the entire adult Drosophila brain reveals insights into
+   sensorimotor processing.* Nature 634, 210-219 (2024).
+   github.com/philshiu/Drosophila_brain_model.
+9. Brette, R. et al. *Simulation of networks of spiking neurons: a review of
+   tools and strategies.* J. Comput. Neurosci. 23, 349-398 (2007).
+10. van Rossum, M.C.W. *A novel spike distance.* Neural Computation 13,
+    751-763 (2001).
+11. Jacob, B. et al. *Quantization and training of neural networks for
+    efficient integer-arithmetic-only inference.* CVPR (2018).
 
 ---
 
@@ -209,6 +265,7 @@ same 169,088 cells, forever.
 | `src/ImmortalFruitFliesTape.sol` | one tape contract: a slice of the connectome as runtime code |
 | `src/Obrain.sol` | the metabolism: 60 channels, burn tiers, `feed()` |
 | `tapes/` | all 85 connectome payloads, exactly as deployed |
+| `tools/verify_tapes.py` | byte-identity proof: on-chain tape code vs `tapes/` (stdlib only) |
 | `foundry.toml` | build config (solc 0.8.28, via_ir, cancun) |
 
 ```bash
