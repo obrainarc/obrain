@@ -1,12 +1,13 @@
 # obrain - a living fly brain, sealed in a contract
 
-This repository holds one organism: the complete brain of an adult female
-*Drosophila melanogaster* - 169,088 neurons lifted from the BANC v888
-whole-brain connectome - running as an integer spiking network inside a smart
-contract. It is not a rendering of a brain, a model of a brain, or a database
-about a brain. It is the connectome itself, wired synapse by synapse into
-bytecode, with a membrane potential for every neuron and a single rule for
-staying alive: it eats a token.
+This repository holds one organism: the complete central nervous system of an
+adult female *Drosophila melanogaster* - 169,088 neurons lifted from the BANC
+v888 brain-and-nerve-cord connectome (Bates et al., *Nature* 656, 957-970,
+2026) - running as an integer spiking network inside a smart contract. It is
+not a rendering of a brain, a model of a brain, or a database about a brain.
+It is the connectome itself, wired synapse by synapse into bytecode, with a
+membrane potential for every neuron and a single rule for staying alive: it
+eats a token.
 
 **The organism is live on Arc mainnet. Watch it think: https://obrain.cloud**
 
@@ -21,12 +22,43 @@ Arc mainnet (`5042`), gas paid in USDC. Explorer: https://explorer.arc.io
 
 ## The specimen
 
-The BANC v888 dataset is a full adult *Drosophila* brain reconstructed at
-synapse resolution: every one of its 169,088 neurons is present, and every
-chemical synapse between them is counted. A fruit fly does not have a large
-brain, but it has a complete one - enough neuropil to smell, to navigate, to
-fight, to court, to sleep. What the connectome gives us is the exact wiring of
-that machine: which cell talks to which cell, how strongly, and in what order.
+The specimen is BANC v888 - the FlyWire release of the brain-and-nerve-cord
+connectome of an adult female *Drosophila melanogaster* (Bates et al. 2026).
+The underlying electron-microscopy volume, cut on a GridTape line at
+4 x 4 x 45 nm³, covers the entire CNS: brain plus ventral nerve cord. The
+reconstruction is not a static scan. A convolutional network segmented the
+tissue, 155 human proofreaders spent 38.6 person-years correcting it, and the
+peer-reviewed inventory carries 150,841 backbone-proofread neurons plus
+16,140 peripheral sensory afferents entering through the 48 peripheral
+nerves, with 218-259 million synaptic links detected by a second network
+validated at F-score 0.83 (precision 0.87, recall 0.78). From this inventory
+the contract instantiates 169,088 cells, one membrane potential each.
+
+A fruit fly does not have a large brain, but it has a complete one - enough
+neuropil to smell, to navigate, to fight, to court, to sleep. What the
+connectome gives us is the exact wiring of that machine: which cell talks to
+which cell, how strongly, and in what order.
+
+## Provenance: the connectome papers
+
+BANC did not appear in a vacuum. It is the current peak of a benchmark line
+of whole-animal connectomes, each one an order of magnitude past the last:
+
+| Dataset | Paper | Scope | Sex | Neurons | Synaptic links |
+|---|---|---|---|---|---|
+| Hemibrain (Janelia + Google) | Scheffer et al., *eLife* 2020 | central brain (~half) | female | ~25,000 | ~21 M |
+| FAFB-FlyWire | Dorkenwald et al., *Nature* 2024 | whole brain | female | 139,255 | ~50 M |
+| **BANC v888 (this specimen)** | Bates et al., *Nature* 2026 | brain + ventral nerve cord (whole CNS) | female | ~160,000 (155,916 proofread, 169,088 segmented in v888) | 218-259 M |
+| Male CNS (Janelia + Google) | *Cell* 2026 | brain + ventral nerve cord (whole CNS) | male | >166,000 | ~125 M |
+
+Google's connectomics team built much of the machinery this line runs on:
+flood-filling networks for automated segmentation (Januszewski et al. 2018),
+co-release of the hemibrain, the Neuroglancer viewer that FlyWire and BANC
+ship on, and the PATHFINDER reconstruction system behind the male-CNS map.
+The field's standard for "the connectome as a running object" was set by
+flyvis (Lappalainen et al., *Nature* 2024): a connectome-constrained network
+of the fly visual system, executed in PyTorch and validated against
+electrophysiology.
 
 A connectome on disk is a dead map. The question this contract answers is
 older than Ethereum: what does the wiring *do* when current runs through it?
@@ -34,6 +66,15 @@ To find out, the map had to be brought somewhere it could hold state, be fed,
 and react in public view, with no owner able to touch the machinery once it
 runs. A blockchain is the only place we know of with those properties. So the
 fly brain was translated, one organ at a time, into a contract.
+
+Honesty about what runs there: the kernel is a leaky integrate-and-fire
+abstraction - point neurons, no graded transmission, no neuromodulation, no
+plasticity, discrete fixed-point time. Where flyvis fits weights to predict
+real spikes, this contract trains nothing: the deployed wiring *is* the
+dataset's topology, and what runs is anatomy-as-computation, verifiable by
+anyone against the published map. These are different scientific claims - one
+is a model of the fly, one is the fly's wiring executing in consensus - and
+this repository makes only the second.
 
 ## The connectome, translated
 
@@ -134,6 +175,29 @@ will sit sealed at its address, leaking charge toward rest, waiting for
 whoever next decides to burn a token into one of its sixty channels - and the
 next thought will be computed exactly as this repository describes, by the
 same 169,088 cells, forever.
+
+---
+
+## References
+
+1. Bates, A.S. et al. ... Lee, W.A. *Distributed control circuits across a
+   brain-and-cord connectome.* Nature 656, 957-970 (2026).
+   doi:10.1038/s41586-026-10735-w. Data: flywire.ai/banc_access,
+   codex.flywire.ai/banc (preprint: bioRxiv 2025.07.31.667571).
+2. Dorkenwald, S. et al. *Neuronal wiring diagram of an adult brain.* Nature
+   (2024). doi:10.1038/s41586-024-07558-y.
+3. Scheffer, L.K. et al. *A connectome and analysis of the adult Drosophila
+   central brain.* eLife 9, e57443 (2020).
+4. Zheng, Z. et al. *A complete electron microscopy volume of the brain of
+   adult Drosophila melanogaster.* Cell 174, 730-743 (2018).
+5. Januszewski, M. et al. *High-precision automated reconstruction of neurons
+   with flood-filling networks.* Nature Methods 15, 605-610 (2018).
+6. *Sexual dimorphism in the complete connectome of the Drosophila male
+   central nervous system.* Cell (2026). doi:10.1016/j.cell.2026.08.015.
+   HHMI Janelia + Google Research; male-cns.janelia.org.
+7. Lappalainen, J.K. et al. *Connectome-constrained networks predict neural
+   activity across the fly visual system.* Nature (2024).
+   github.com/TuragaLab/flyvis.
 
 ---
 
