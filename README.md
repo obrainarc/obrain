@@ -1,5 +1,17 @@
 # obrain - a living fly brain, sealed in a contract
 
+[![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_C2%B7_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
+[![connectome](https://img.shields.io/badge/connectome-BANC_v888-3f6cb4?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
+[![cells](https://img.shields.io/badge/cells-169%2C088-2f8f5f?style=flat-square)](#the-specimen)
+[![synaptic records](https://img.shields.io/badge/synaptic_records-325%2C292-d9822b?style=flat-square)](#the-specimen)
+[![substrate](https://img.shields.io/badge/substrate-Arc_mainnet_5042-6a4c93?style=flat-square)](https://explorer.arc.io/address/0xaef83c5b8742da5e3228930bc6084adcf0539ccd)
+[![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
+[![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
+[![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_(EN_%C2%B7_ZH_%C2%B7_JA)-9f6bab?style=flat-square)](research/README.md)
+[![code license](https://img.shields.io/badge/code-MIT-111111?style=flat-square)](LICENSE)
+[![derived data](https://img.shields.io/badge/derived_data-CC--BY--4.0-9f6bab?style=flat-square)](#licensing-and-citation)
+
 This repository holds one organism: the complete central nervous system of an
 adult female *Drosophila melanogaster* - 169,088 neurons lifted from the BANC
 v888 brain-and-nerve-cord connectome (Bates et al., *Nature* 656, 957-970,
@@ -297,3 +309,20 @@ forge build
 
 The working repository (indexer, 3D live view, deployment) is private; this
 one keeps only the organism.
+
+---
+
+## Licensing and citation
+
+Two licences, stated plainly:
+
+- **Code** (`src/`, `tools/`, `foundry.toml`, matching the SPDX tags) - MIT,
+  see [LICENSE](LICENSE).
+- **Derived data artifacts** (`tapes/`, `annotations/`, and the data and
+  figures under `research/`) - CC-BY-4.0. Attribution: Bates, A.S. et al.
+  *Distributed control circuits across a brain-and-cord connectome.*
+  Nature 656, 957-970 (2026), doi:10.1038/s41586-026-10735-w, and the
+  BANC v888 release from which every artifact here derives.
+
+The upstream BANC data remains the BANC project's, under its own terms;
+this repository relicenses nothing upstream.
