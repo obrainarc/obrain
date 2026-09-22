@@ -1,6 +1,6 @@
 # obrain - a living fly brain, sealed in a contract
 
-[![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_C2%B7_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
+[![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
 [![connectome](https://img.shields.io/badge/connectome-BANC_v888-3f6cb4?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
 [![cells](https://img.shields.io/badge/cells-169%2C088-2f8f5f?style=flat-square)](#the-specimen)
 [![synaptic records](https://img.shields.io/badge/synaptic_records-325%2C292-d9822b?style=flat-square)](#the-specimen)
@@ -8,7 +8,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_(EN_%C2%B7_ZH_%C2%B7_JA)-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%28EN_%C2%B7_ZH_%C2%B7_JA%29-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-MIT-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC--BY--4.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
