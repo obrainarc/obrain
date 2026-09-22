@@ -2,7 +2,7 @@
 
 **OBRAIN 田野研究 CS-001。** 标本：成年雌性*黑腹果蝇*（*Drosophila melanogaster*）之完整中枢神经系统（BANC v888；Bates、Phelps、Kim 等，*Nature* 656, 957-970, 2026）， instantiated 为 169,088 个积分-发放单元，其布线 - 325,292 条加权突触记录 - 逐突触刻蚀于 Arc 主网的 85 个 tape 合约之中（`0xaef83c5b8742da5e3228930bc6084adcf0539ccd`）。观察窗口：tick 1-74，区块 21,181,651-22,041,291，2026-09-16T15:54Z 至 2026-09-21T17:05Z。普查于 2026-09-22 封卷；本文之每一个量，或读自共识，或经确定性重放再现，任何一方皆可以第 5 节之工件重新推导。
 
-> 本研究的英文原版为 `consensus-neurophysiology-onchain-drosophila.md`；日文版为 `.ja.md`。数据、图与验证工件为各语言版本所共用。
+> 本研究以五种语言发布：英文原版 `consensus-neurophysiology-onchain-drosophila.md`、中文（本版）、日文 `.ja.md`、越南文 `.vi.md` 与印地文 `.hi.md`。数据、图与验证工件为各版本共用。
 
 ---
 
