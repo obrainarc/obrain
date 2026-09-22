@@ -257,6 +257,24 @@ behavioral equivalence with any other group's simulations.
 
 ---
 
+## Field studies
+
+The organism's emitted history is itself a research corpus. Each study under
+`research/` is a complete, self-verifying package - report, figures,
+machine-readable data, and the tools to re-derive every number from
+consensus.
+
+| Study | Window | Subject |
+|---|---|---|
+| `research/2026-09-22-brainstate-census/` | ticks 1-74 (blocks 21,181,651-22,041,291) | consensus-executed neurophysiology of the first five days: exhaustive `BrainState` census, byte-exact twin replay, sensory-epithelium dynamics |
+
+```bash
+python3 tools/verify_census.py        # re-scan the chain, diff against the census
+python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
+```
+
+---
+
 ## This repository
 
 | Path | What it is |
@@ -265,7 +283,12 @@ behavioral equivalence with any other group's simulations.
 | `src/ImmortalFruitFliesTape.sol` | one tape contract: a slice of the connectome as runtime code |
 | `src/Obrain.sol` | the metabolism: 60 channels, burn tiers, `feed()` |
 | `tapes/` | all 85 connectome payloads, exactly as deployed |
+| `annotations/` | cytoarchitectonic table: 5 bytes per cell (super-class, cell class, cell type, region, side, flow), BANC v888 metadata in the kernel's index space |
 | `tools/verify_tapes.py` | byte-identity proof: on-chain tape code vs `tapes/` (stdlib only) |
+| `tools/tapes.py`, `tools/vbrain.py` | the vectorised, chain-exact twin of the kernel (numpy) |
+| `tools/verify_twin.py` | deterministic replay: given the afferent words, regenerates every spike list and `stateRoot()` |
+| `tools/verify_census.py` | re-scans `BrainState`/`Feed` logs from Arc and diffs them against a shipped census (stdlib only) |
+| `research/` | field studies: report, figures, machine-readable data, verification logs |
 | `foundry.toml` | build config (solc 0.8.28, via_ir, cancun) |
 
 ```bash
