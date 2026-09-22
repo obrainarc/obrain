@@ -8,8 +8,9 @@ report, figures, machine-readable data, verification artifacts, and
 |---|---|---|
 | CS-001 | *Consensus-executed neurophysiology of an immortal Drosophila connectome: an exhaustive census of `BrainState` emissions across the first 74 ticks of on-chain ontogeny* | ticks 1-74, 2026-09-16 to 2026-09-21 |
 
-Studies are published in English, Chinese (`.zh.md`) and Japanese (`.ja.md`)
-editions; data, figures and verification artifacts are shared between them.
+Studies are published in English, Chinese (`.zh.md`), Japanese (`.ja.md`),
+Vietnamese (`.vi.md`) and Hindi (`.hi.md`) editions; data, figures and
+verification artifacts are shared between them.
 
 To re-audit a census against the living chain, from the repository root:
 

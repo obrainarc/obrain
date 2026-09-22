@@ -1,6 +1,6 @@
 # obrain - 成年雌性*黑腹果蝇*之完整中枢神经系统，运行于 Arc 共识之中
 
-**阅读语言：** [English](README.md) · [中文](README.zh.md) · [日本語](README.ja.md)
+**阅读语言：** [English](README.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md) · [हिन्दी](README.hi.md)
 
 [![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
 [![connectome](https://img.shields.io/badge/connectome-BANC_v888-3f6cb4?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
