@@ -9,8 +9,8 @@
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
 [![field studies](https://img.shields.io/badge/field_studies-CS--001_%28EN_%C2%B7_ZH_%C2%B7_JA%29-9f6bab?style=flat-square)](research/README.md)
-[![code license](https://img.shields.io/badge/code-MIT-111111?style=flat-square)](LICENSE)
-[![derived data](https://img.shields.io/badge/derived_data-CC--BY--4.0-9f6bab?style=flat-square)](#licensing-and-citation)
+[![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
+[![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
 This repository holds one organism: the complete central nervous system of an
 adult female *Drosophila melanogaster* - 169,088 neurons lifted from the BANC
@@ -301,6 +301,7 @@ python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census
 | `tools/verify_twin.py` | deterministic replay: given the afferent words, regenerates every spike list and `stateRoot()` |
 | `tools/verify_census.py` | re-scans `BrainState`/`Feed` logs from Arc and diffs them against a shipped census (stdlib only) |
 | `research/` | field studies: report, figures, machine-readable data, verification logs |
+| `LICENSE`, `LICENSE-DATA` | the two licences: AGPL-3.0-only for code, CC BY-NC-SA 4.0 for derived data artifacts |
 | `foundry.toml` | build config (solc 0.8.28, via_ir, cancun) |
 
 ```bash
@@ -314,15 +315,27 @@ one keeps only the organism.
 
 ## Licensing and citation
 
-Two licences, stated plainly:
+The repository is licensed strictly, with the authors' rights first. Two
+licences, both enforceable:
 
-- **Code** (`src/`, `tools/`, `foundry.toml`, matching the SPDX tags) - MIT,
-  see [LICENSE](LICENSE).
+- **Code** (`src/`, `tools/`, `foundry.toml`, matching the SPDX tags) -
+  **GNU AGPL-3.0-only**, see [LICENSE](LICENSE). The strongest standard
+  copyleft: anyone who builds upon this code, deploys it, or offers it as
+  a service - on chain or off - must release the corresponding source under
+  the same terms. Closed appropriation of the organism's machinery is not
+  permitted.
 - **Derived data artifacts** (`tapes/`, `annotations/`, and the data and
-  figures under `research/`) - CC-BY-4.0. Attribution: Bates, A.S. et al.
+  figures under `research/`) - **CC BY-NC-SA 4.0**, see
+  [LICENSE-DATA](LICENSE-DATA). Attribution is mandatory, commercial use
+  requires the authors' separate permission, and adaptations carry the
+  same licence forward. Required attribution: Bates, A.S. et al.
   *Distributed control circuits across a brain-and-cord connectome.*
   Nature 656, 957-970 (2026), doi:10.1038/s41586-026-10735-w, and the
   BANC v888 release from which every artifact here derives.
 
-The upstream BANC data remains the BANC project's, under its own terms;
-this repository relicenses nothing upstream.
+Revisions of this repository published before this change carried MIT (code)
+and CC-BY-4.0 (data) and remain available under those terms; the present
+terms bind this and every later revision. The deployed contracts on Arc
+predate the change and execute unchanged. The upstream BANC data remains
+the BANC project's, under its own terms; this repository relicenses
+nothing upstream.
