@@ -1,4 +1,6 @@
-# obrain - a living fly brain, sealed in a contract
+# obrain - the intact central nervous system of an adult female *Drosophila melanogaster*, executing in Arc consensus
+
+**Read this in:** [English](README.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 [![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
 [![connectome](https://img.shields.io/badge/connectome-BANC_v888-3f6cb4?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
