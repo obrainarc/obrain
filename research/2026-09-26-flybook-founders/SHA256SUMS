@@ -1,0 +1,5 @@
+7955e115be11a509ab56e51e5a1fd5a104ba9d9f07180b38f6bffbfb9d61b450  research/2026-09-26-flybook-founders/founder-generation-population-genetics.md
+c05213cde4ba640d7a6361e2b57dc6bb471a065e9d2d7a223fce797924c39ee2  research/2026-09-26-flybook-founders/data/founder_census.csv
+b83048a2a0dcf0c19ddfe7ef0e782e921cd0dd84fc3585978b95c4ef086b5109  research/2026-09-26-flybook-founders/verification/verify_flybook.log
+5d9df30654673c6fe5a4d43f1f40838b176021a366fc76d280a08d3fd1e4288f  research/2026-09-26-flybook-founders/verification/verify_tapes.log
+7d74443c25e0578382b95e3ffafeeb010070360bd7f456e984e11bf2d0571658  tools/verify_flybook.py

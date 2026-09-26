@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%285_editions%29-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#giấy-phép-và-trích-dẫn)
 
@@ -172,10 +172,12 @@ Lịch sử phát xạ của sinh vật tự nó là một kho ngữ liệu nghi
 | Nghiên cứu | Cửa sổ | Chủ đề |
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | tick 1-74 (khối 21.181.651-22.041.291) | thần kinh sinh lý đồng thuận của năm ngày đầu: điều tra `BrainState` toàn bộ, tái chạy twin từng-byte, động học thượng bì cảm giác |
+| `research/2026-09-26-flybook-founders/` | khối 22.703.390-22.853.967 (lần vũ hóa đầu 22.821.848) | di truyền học quần thể của thế hệ sáng lập Flybook: 153 hậu duệ trên chính các tape của Tổ tiên, mọi kiểu gen được tái lập từ chuỗi, cấu trúc quỹ gen sáng lập, các dấu chuẩn kiểu hình |
 
 ```bash
 python3 tools/verify_census.py        # quét lại chuỗi, so với bản điều tra
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
+python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
 ```
 
 ---
@@ -193,6 +195,7 @@ python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census
 | `tools/tapes.py`, `tools/vbrain.py` | twin vector hóa, chính xác chuỗi của nhân (numpy) |
 | `tools/verify_twin.py` | tái chạy tất định: cho các từ truyền vào, tái sinh mọi danh sách xung và `stateRoot()` |
 | `tools/verify_census.py` | quét lại log `BrainState`/`Feed` từ Arc và so với bản điều tra đóng gói (chỉ stdlib) |
+| `tools/verify_flybook.py` | tái dẫn xuất mọi hậu duệ Flybook từ Arc: tape của loài là tape của Tổ tiên, mỗi bộ não là bản sao `Connectome`, mỗi kiểu gen sáng lập được tái lập từ hạt giống block-hash, mỗi `Thought` cuối cùng khớp với storage |
 | `research/` | nghiên cứu thực địa: báo cáo, hình, dữ liệu đọc máy, log kiểm chứng |
 | `LICENSE`, `LICENSE-DATA` | hai giấy phép: AGPL-3.0-only cho mã, CC BY-NC-SA 4.0 cho artifact dữ liệu phái sinh |
 | `foundry.toml` | cấu hình build (solc 0.8.28, via_ir, cancun) |

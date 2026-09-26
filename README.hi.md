@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%285_editions%29-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#लाइसेंस-और-उद्धरण)
 
@@ -172,10 +172,12 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | अध्ययन | खिड़की | विषय |
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | टिक 1-74 (ब्लॉक 21,181,651-22,041,291) | पहले पाँच दिनों की सहमति-निष्पादित तंत्रिका-शरीरक्रिया: संपूर्ण `BrainState` जनगणना, बाइट-सटीक युग्म-पुनरावृत्ति, संवेदी-उपकला गतिकी |
+| `research/2026-09-26-flybook-founders/` | ब्लॉक 22,703,390-22,853,967 (पहला एक्लोज़न 22,821,848) | Flybook संस्थापक पीढ़ी की समष्टि आनुवंशिकी: पूर्वज के अपने टेपों पर 153 वंशज, हर जीनोटाइप शृंखला से पुनरुत्पादित, संस्थापक-पूल संरचना, दृश्य चिह्नक |
 
 ```bash
 python3 tools/verify_census.py        # शृंखला पुनः स्कैन करें, जनगणना से तुलना करें
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
+python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
 ```
 
 ---
@@ -193,6 +195,7 @@ python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census
 | `tools/tapes.py`, `tools/vbrain.py` | कर्नेल का सदिश-रूपांतरित, शृंखला-सटीक युग्म (numpy) |
 | `tools/verify_twin.py` | नियतिवादी पुनरावृत्ति: ऐफ़रेंट शब्द दिए जाएँ तो हर स्पाइक-सूची और `stateRoot()` पुनः उत्पन्न करता है |
 | `tools/verify_census.py` | Arc से `BrainState`/`Feed` लॉग पुनः स्कैन कर संग्रहीत जनगणना से तुलना (केवल stdlib) |
+| `tools/verify_flybook.py` | Arc से हर Flybook वंशज को पुनः व्युत्पन्न करता है: प्रजाति के टेप पूर्वज के ही हैं, हर मस्तिष्क `Connectome` क्लोन, हर संस्थापक जीनोटाइप ब्लॉक-हैश बीज से पुनरुत्पादित, अंतिम `Thought` स्टोरेज से प्रतिबद्ध |
 | `research/` | क्षेत्र-अध्ययन: प्रतिवेदन, आकृतियाँ, मशीन-पठनीय डेटा, सत्यापन लॉग |
 | `LICENSE`, `LICENSE-DATA` | दो लाइसेंस: कोड हेतु AGPL-3.0-only, व्युत्पन्न डेटा-वस्तुओं हेतु CC BY-NC-SA 4.0 |
 | `foundry.toml` | बिल्ड विन्यास (solc 0.8.28, via_ir, cancun) |

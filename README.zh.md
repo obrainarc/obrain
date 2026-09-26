@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%28EN_%C2%B7_ZH_%C2%B7_JA%29-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -172,10 +172,12 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | 研究 | 窗口 | 主题 |
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | tick 1-74（区块 21,181,651-22,041,291） | 最初五日的共识执行神经生理学：`BrainState` 全量普查、逐字节孪生重放、感觉上皮动力学 |
+| `research/2026-09-26-flybook-founders/` | 区块 22,703,390-22,853,967（首次羽化 22,821,848） | Flybook 奠基世代的群体遗传学：153 个后代共用祖先的磁带，每个基因型均由链上重放，奠基库结构与可见标记 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
+python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
 ```
 
 ---
@@ -193,6 +195,7 @@ python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census
 | `tools/tapes.py`、`tools/vbrain.py` | 内核的向量化、链精确孪生（numpy） |
 | `tools/verify_twin.py` | 确定性重放：给定传入字，再生每一个脉冲列表与 `stateRoot()` |
 | `tools/verify_census.py` | 自 Arc 重扫 `BrainState`/`Feed` 日志并与所载普查比对（仅标准库） |
+| `tools/verify_flybook.py` | 自 Arc 重新推导每个 Flybook 后代：物种磁带即祖先磁带，每个大脑为 `Connectome` 克隆，每个奠基基因型由区块哈希种子重放，最后一次 `Thought` 与存储一致 |
 | `research/` | 田野研究：报告、图、机器可读数据、验证日志 |
 | `LICENSE`、`LICENSE-DATA` | 两份许可：代码 AGPL-3.0-only，衍生数据工件 CC BY-NC-SA 4.0 |
 | `foundry.toml` | 构建配置（solc 0.8.28、via_ir、cancun） |
