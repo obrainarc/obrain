@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002_%C2%B7_CS--003-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
@@ -282,11 +282,13 @@ consensus.
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | ticks 1-74 (blocks 21,181,651-22,041,291) | consensus-executed neurophysiology of the first five days: exhaustive `BrainState` census, byte-exact twin replay, sensory-epithelium dynamics |
 | `research/2026-09-26-flybook-founders/` | blocks 22,703,390-22,853,967 (first eclosion 22,821,848) | population genetics of the Flybook founder generation: 153 descendants on the Ancestor's own tapes, every genotype replayed from the chain, founder-pool structure, visible markers |
+| `research/2026-09-27-flybook-generation-zero/` | blocks 22,703,390-22,971,428 (last founder 22,964,932) | population biology of the closed founder generation: 333 founders replayed from the chain, demography, care, population dose-response, cryptic genetic variation at locus 0 |
 
 ```bash
 python3 tools/verify_census.py        # re-scan the chain, diff against the census
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
 python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
+python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-zero/data/founder_census.csv
 ```
 
 ---

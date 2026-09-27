@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.ja.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002_%C2%B7_CS--003-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#ライセンスと引用)
 
@@ -173,11 +173,13 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | ティック 1-74（ブロック 21,181,651-22,041,291） | 最初の五日間のコンセンサス実行神経生理学：`BrainState` の網羅的センサス、バイト厳密な双生体リプレイ、感覚上皮のダイナミクス |
 | `research/2026-09-26-flybook-founders/` | ブロック 22,703,390-22,853,967（最初の羽化 22,821,848） | Flybook 創始世代の集団遺伝学：祖先のテープを共有する 153 個体、全遺伝子型をチェーンから再現、創始集団の構造と可視マーカー |
+| `research/2026-09-27-flybook-generation-zero/` | ブロック 22,703,390-22,971,428（最後の創始個体 22,964,932） | 閉じた創始世代の集団生物学：333 個体すべてをチェーンから再現、人口学、世話、集団の用量反応、遺伝子座 0 の潜在的遺伝変異 |
 
 ```bash
 python3 tools/verify_census.py        # 鎖を再走査し、センサスと比較する
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
 python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
+python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-zero/data/founder_census.csv
 ```
 
 ---

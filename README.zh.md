@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002_%C2%B7_CS--003-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -173,11 +173,13 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 |---|---|---|
 | `research/2026-09-22-brainstate-census/` | tick 1-74（区块 21,181,651-22,041,291） | 最初五日的共识执行神经生理学：`BrainState` 全量普查、逐字节孪生重放、感觉上皮动力学 |
 | `research/2026-09-26-flybook-founders/` | 区块 22,703,390-22,853,967（首次羽化 22,821,848） | Flybook 奠基世代的群体遗传学：153 个后代共用祖先的磁带，每个基因型均由链上重放，奠基库结构与可见标记 |
+| `research/2026-09-27-flybook-generation-zero/` | 区块 22,703,390-22,971,428（最后一个奠基者 22,964,932） | 已封闭奠基世代的种群生物学：333 个奠基者均由链上重放，种群统计、照料、种群剂量-反应、0 号位点的隐性遗传变异 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
 python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
+python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-zero/data/founder_census.csv
 ```
 
 ---
