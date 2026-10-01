@@ -51,18 +51,18 @@ The first courtship was made at block 23,399,299 (2026-09-29T16:47Z) and rejecte
 | 15 | 10 | 0 |
 | 20 | 5 | 0 |
 
-Selectivity took the values 9 (6 rulings), 10 (12) and 11 (31). `fired` comes in steps of 5 in every ruling. The decision is made at `fired = 10`: these targets accept when their selectivity is 9 or 10 and reject when it is 11. Selectivity is set by the target's genotype (`selectivityBase + fidelity × selectivitySlope / 100`, `Courting.selectivityOf`). Mate choice in this population is therefore already genotype-dependent, within one step of the threshold. In all 49 rulings `fired ≥ selectivity` decides the outcome exactly, and no rejection was a cooldown.
+Selectivity took the values 9 (6 rulings), 10 (12) and 11 (31). `fired` comes in steps of 5 in every ruling. The decision is made at `fired = 10`: these targets accept when their selectivity is 9 or 10 and reject when it is 11. Selectivity is set by the target's genotype (`selectivityBase + fidelity × selectivitySlope / 100`, `Courting.selectivityOf`). Mate choice in this population is therefore already genotype-dependent, within one step of the threshold. In all 49 rulings `fired ≥ selectivity` decides the outcome exactly, and no rejection was a cooldown (Fig. 1).
 
 ### 3.2 The pedigree
 
-The 26 accepted courtships fixed 26 eggs, and 20 were laid; 6 eggs are unlaid at window close. Eighteen pupae were laid, 17 settled and 13 hatched. Of the 13 hatched pupae, eleven gave candidate 0 and two gave candidate 1. The 33 children have 44 distinct parents: 26 mothers and 29 fathers, and 11 founders served in both roles. Founder 188 parented 4 children; 285, 55 and 196 parented 3 each. The children are held by 20 owners.
+The 26 accepted courtships fixed 26 eggs, and 20 were laid; 6 eggs are unlaid at window close. Eighteen pupae were laid, 17 settled and 13 hatched. Of the 13 hatched pupae, eleven gave candidate 0 and two gave candidate 1. The 33 children have 44 distinct parents: 26 mothers and 29 fathers, and 11 founders served in both roles. Founder 188 parented 4 children; 285, 55 and 196 parented 3 each. The children are held by 20 owners (Fig. 2).
 
 ### 3.3 Inheritance, audited
 
 `Meiosis.cross` of the parents' `Eclosed` genomes under the consensus seed reproduces the child's `Eclosed` genome for **33 of 33 children** (20 by egg, 13 by pupa). For pupae, the reproduced genome is the candidate named by `pick`. Each child's `Eclosed` parents equal the parents named by its egg or pupa.
 
 - **Segregation.** Children take a mean of 32.4 non-mutated loci from the mother (range 24-46). The expectation is half of the ~62.6 non-mutated loci per child, 31.3. Neither parent is favoured.
-- **Mutation.** There are 46 point mutations over 2,112 loci (2.18 %), against a design rate of 2 % (expectation 42.2). The count of mutations per child is 0 (7 children), 1 (13), 2 (7), 3 (5) and 4 (1).
+- **Mutation.** There are 46 point mutations over 2,112 loci (2.18 %), against a design rate of 2 % (expectation 42.2). The count of mutations per child is 0 (7 children), 1 (13), 2 (7), 3 (5) and 4 (1) (Fig. 3).
 
 The audit closes the loop CS-002 opened (section 3.7 there). The germline of a founder was dealt by consensus. The germline of a child is transmitted by consensus. Both are reproducible by anyone from public logs.
 
@@ -70,7 +70,7 @@ The audit closes the loop CS-002 opened (section 3.7 there). The germline of a f
 
 In the window, 151 keepers made 2,940 thoughts on 320 individuals: 2,869 on founders and 71 on children. Of these, 2,478 were single stimuli and 413 were expeditions (`forage`: five sensilla in one thought). The other 49 were pheromone thoughts. The stimuli used 19 of the 20 sensilla. Sensillum 0 is courtship's, and the lowest tier dominates: tiers 0/1/2 occur 4,014/357/172 times. Fees totalled 3,409,000 OBRAIN.
 
-Care remained strongly unequal. The variance/mean of thoughts per stimulated individual is 51.6, against 1 under a Poisson process. Individuals 77, 27 and 187 received 185, 163 and 141 thoughts. One keeper made 322 thoughts. Activity peaked and then collapsed. The table counts thoughts per window of 172,800 blocks, about 24.3 h at the observed 0.507 s per block.
+Care remained strongly unequal. The variance/mean of thoughts per stimulated individual is 51.6, against 1 under a Poisson process. Individuals 77, 27 and 187 received 185, 163 and 141 thoughts. One keeper made 322 thoughts, and across keepers the Gini coefficient of thoughts made is 0.72 (Fig. 4). Activity peaked and then collapsed. The table counts thoughts per window of 172,800 blocks, about 24.3 h at the observed 0.507 s per block.
 
 | window from block | thoughts |
 |---|---|
@@ -109,6 +109,7 @@ Artifacts:
 - `data/pedigree.csv`: one row per child, with fly, route, egg or pupa id, block, owner, mother, father, the seed passed to `cross`, pick, maternal loci, mutated loci and genome.
 - `data/courtship.csv`: one row per ruling, with block, tx, target, suitor, courter, outcome, fired, selectivity and egg.
 - `data/thought_census.csv`: one row per thought after block 22,971,428, with fly, tick, block, keeper, senses (`sensillum:tier` …, or `pheromone`), fee (OBRAIN), input word, synaptic deliveries, spikes, regions and projected death.
+- `figures/`: Figs. 1-4, drawn with Matplotlib from the three CSVs alone.
 - `verification/`: the audit runs.
 
 `SHA256SUMS` covers all of them.

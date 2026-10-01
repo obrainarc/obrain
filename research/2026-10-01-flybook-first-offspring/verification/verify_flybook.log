@@ -1,0 +1,8 @@
+wiring: Holotype.tape(i) == Ancestor.tapes(i) 85/85, configHash 0xbaf5133151386f4d2fbad817c793b1fa39942b9876910132011b2be2b6a1bb91
+census research/2026-09-27-flybook-generation-zero/data/founder_census.csv: 333 rows, identical
+alleles per founder: mean 32.25 var 14.92 min 23 max 43 (Binomial(64, 1/2): 32, 16)
+eyes: brown 93 · sepia 89 · vermilion 82 · white 66 · red 3
+body: yellow 123 · ebony 108 · tan 102
+wings: curly 114 · vestigial 108 · dumpy 108 · normal 3
+size: small 169 · large 163 · medium 1
+333 flies to block 22964932: 333 founders reproduced from the chain, 319 have thought, 28 matings accepted; head 23724519; 0 mismatches
