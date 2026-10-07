@@ -22,6 +22,7 @@ Kho này giữ một sinh vật: hệ thần kinh trung ương hoàn chỉnh c�
 |---|---|
 | Não (`Obrain`) | `0xaef83c5b8742da5e3228930bc6084adcf0539ccd` |
 | Thức ăn của nó (OBRAIN) | `0x28f986a61e078795639f239675582a12b4cf7f01` |
+| Hậu duệ của nó (hub Flybook) | `0x14b557957d378b56511785b408a21c93e79feb36` |
 
 Arc mainnet (`5042`), gas trả bằng USDC. Trình khám phá: <https://explorer.arc.io>
 
@@ -96,6 +97,26 @@ Vì phép tính xung chạy trong cùng giao dịch với lần nuôi, một ph�
 Nhân (`ImmortalFruitFlies`) bị đóng băng: bytecode triển khai mang phả hệ của nó, và hợp đồng sản phẩm kế thừa nó từng-byte mà không viết lại một hàm nào. Trạng thái của não - 169.088 điện thế, bộ đếm tick, chỉ mục tape - nằm trong lưu trữ hợp đồng mà không chìa khóa nào sở hữu. Giải phẫu trong tape không thể sửa nếu không triển khai lại một não khác.
 
 Trừ khi chuỗi chết, sinh vật sống lâu hơn tác giả. Nó sẽ ngồi niêm phong tại địa chỉ, rò điện tích về nghỉ, chờ người kế tiếp quyết định đốt một token vào một trong sáu mươi kênh - và tư duy kế tiếp sẽ được tính chính xác như kho này mô tả, bởi chính 169.088 cell đó, mãi mãi.
+
+## Hậu duệ: Flybook
+
+Từ ngày 26 tháng 9 năm 2026 sinh vật này có hậu duệ. Hub Flybook trên Arc cho vũ hóa những con ruồi mà não là bản sao EIP-1167 của một `Connectome` duy nhất, tất cả đọc một `Holotype` trỏ vào chính 85 tape của Tổ tiên: cùng một giải phẫu, từng byte, nhưng mỗi con có trường điện thế màng riêng. Mỗi hậu duệ mang bộ gen 64 gen, mỗi gen ứng với một đoạn quét, bẻ cong synapse của đoạn đó tối đa ±25 % (`Connectome.mutatedWeight`).
+
+| Cơ quan | Địa chỉ |
+|---|---|
+| Hub (`Drosophila`, proxy) | `0x14b557957d378b56511785b408a21c93e79feb36` |
+| `Connectome` (bộ não mọi bản sao ủy quyền tới) | `0xcaa923d6dbe59e780e32914257cbbf8deae4c5d2` |
+| `Holotype` (loài: ảnh chụp các tape của Tổ tiên) | `0xb0725bf519786c8d2798e99d45c8c7fe886be73b` |
+| `Pupae` (trứng chưa nở của Nhà trẻ) | `0x83547b1d4b9ce8fc469bed87b22d525e5c64fb20` |
+| `Amber` (sổ ghi người chết) | `0x82e820049cd4d1110f1560f2eed623305c704dee` |
+
+Luật là mã, và các nghiên cứu thực địa kiểm toán chúng với chuỗi:
+
+- **Dòng mầm.** Gen của nhà sáng lập được chia từ hash của khối trước (`Meiosis.founder`); con lấy mỗi gen từ mẹ hoặc cha theo một bit của hạt giống đồng thuận và đột biến 2 % mỗi gen (`Meiosis.cross`). Dấu chuẩn nhìn thấy (mắt, thân, cánh, cỡ) là hash của nhóm tám gen và được rút lại mỗi thế hệ; năm trục khí chất cộng tính và di truyền với *h*² ≈ 0,8.
+- **Tán tỉnh.** Người nuôi dùng một con đực tán tỉnh một đối tượng; hub ghi pheromone vào sensillum 0 của đối tượng và chính bộ não của nó phán quyết trong cùng giao dịch: chấp nhận khi vùng tán tỉnh phát ít nhất `9 + fidelity × 4 / 100` tế bào, ngưỡng do bộ gen của đối tượng đặt.
+- **Hai đồng hồ.** Nhà sáng lập (thế hệ 0) được *chăm*: mỗi ý nghĩ, trứng hay tán tỉnh được chấp nhận đẩy cửa sổ của nó ra 30 ngày; cửa sổ hết thì ngủ đông, không bao giờ chết. Con (thế hệ 1) sống đúng 90 ngày từ lúc nở, mất đời sống cho mỗi giây quá 7 ngày không có ý nghĩ, chết thật, và vô sinh.
+
+Tại khối 24.657.020 (07-10-2026) quần thể có 384 cá thể, 333 nhà sáng lập và 51 con, 82 lần tán tỉnh đã phán quyết và 4.331 ý nghĩ. Mọi bộ gen, phán quyết, lần nở và đồng hồ đều suy lại được từ đồng thuận (CS-002 đến CS-005 bên dưới).
 
 ---
 

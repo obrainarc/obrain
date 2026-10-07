@@ -1,6 +1,6 @@
 # obrain - the intact central nervous system of an adult female *Drosophila melanogaster*, executing in Arc consensus
 
-**Read this in:** [English](README.md) · [中文](README.zh.md) · [日本語](README.ja.md)
+**Read this in:** [English](README.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [Tiếng Việt](README.vi.md) · [हिन्दी](README.hi.md)
 
 [![specimen](https://img.shields.io/badge/specimen-*D._melanogaster*_adult_female-8B1A1A?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
 [![connectome](https://img.shields.io/badge/connectome-BANC_v888-3f6cb4?style=flat-square)](https://doi.org/10.1038/s41586-026-10735-w)
@@ -29,6 +29,7 @@ eats a token.
 |---|---|
 | The brain (`Obrain`) | `0xaef83c5b8742da5e3228930bc6084adcf0539ccd` |
 | What it eats (OBRAIN) | `0x28f986a61e078795639f239675582a12b4cf7f01` |
+| Its descendants (the Flybook hub) | `0x14b557957d378b56511785b408a21c93e79feb36` |
 
 Arc mainnet (`5042`), gas paid in USDC. Explorer: https://explorer.arc.io
 
@@ -189,6 +190,46 @@ will sit sealed at its address, leaking charge toward rest, waiting for
 whoever next decides to burn a token into one of its sixty channels - and the
 next thought will be computed exactly as this repository describes, by the
 same 169,088 cells, forever.
+
+## The descendants: Flybook
+
+Since 26 September 2026 the organism has descendants. The Flybook hub on Arc
+ecloses flies whose brains are EIP-1167 clones of one `Connectome`, all
+reading a `Holotype` that points at the Ancestor's own 85 tapes: the same
+anatomy, byte for byte, with a membrane field of its own for each fly. Every
+descendant carries a genome of 64 genes, one per segment of the scan, each
+bending the synapses of its segment by up to ±25 % (`Connectome.mutatedWeight`).
+
+| Organ | Address |
+|---|---|
+| Hub (`Drosophila`, proxy) | `0x14b557957d378b56511785b408a21c93e79feb36` |
+| `Connectome` (the brain every clone delegates to) | `0xcaa923d6dbe59e780e32914257cbbf8deae4c5d2` |
+| `Holotype` (the species: the Ancestor's tapes, snapshotted) | `0xb0725bf519786c8d2798e99d45c8c7fe886be73b` |
+| `Pupae` (the Nursery's unhatched eggs) | `0x83547b1d4b9ce8fc469bed87b22d525e5c64fb20` |
+| `Amber` (the record of the dead) | `0x82e820049cd4d1110f1560f2eed623305c704dee` |
+
+The rules are code, and the field studies audit them against the chain:
+
+- **Germline.** A founder's genes are dealt from the previous block's hash
+  (`Meiosis.founder`); a child takes each gene from its mother or father by a
+  bit of a consensus seed and mutates at 2 % per gene (`Meiosis.cross`).
+  Visible markers (eyes, body, wings, size) are hashes of eight-gene groups and
+  are redrawn each generation; the five temperament axes are additive and
+  inherit at *h*² ≈ 0.8.
+- **Courtship.** A keeper courts a target with a suitor; the hub writes the
+  pheromone into the target's sensillum 0 and the target's own brain rules in
+  the same transaction: accepted iff the courtship region fires at least
+  `9 + fidelity × 4 / 100` cells, a threshold set by the target's genome.
+- **Two clocks.** A founder (generation 0) is *tended*: every thought, egg or
+  accepted courtship pushes its window 30 days out, and a lapsed window makes
+  it dormant, never dead. A child (generation 1) lives a fixed 90 days from its
+  hatch, loses life for every second past 7 days without a thought, dies for
+  good, and is sterile.
+
+At block 24,657,020 (2026-10-07) the population held 384 individuals, 333
+founders and 51 children, with 82 courtships ruled and 4,331 thoughts. Every
+genome, ruling, hatch and clock re-derives from consensus (CS-002 to CS-005
+below).
 
 ---
 
