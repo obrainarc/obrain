@@ -13,7 +13,11 @@ alone that its genome is `Meiosis.cross(mother, father, seed)` of its parents' E
 cross: gene s from the mother when bit s of the seed is set, else from the father; then with
 probability 20/1000 (keccak(seed, uint8(s), "mu") mod 1000 < 20) replaced by the low 32 bits
 of keccak(seed, uint8(s), "new"). Every courtship ruling is checked against `fired >=
-selectivity` (a ruling above threshold that was rejected must be a cooldown).
+selectivity` (a ruling above threshold that was rejected must be a cooldown); `fired` against
+regions[0] of the target's own Thought on the pheromone (its brain's spike list ships with it);
+`selectivity` against selectivityBase + fidelity x selectivitySlope / 100, with fidelity
+recomputed from the target's genome (Phenotype._axis); and every pupa's hatched candidate
+against Pupae.pick over the four candidates' recomputed temperament scores.
 
 Writes pedigree.csv, courtship.csv and thought_census.csv (hub Thought joined by transaction
 with its Sensed logs, or marked `pheromone` when the transaction is the Courted that wrote
@@ -31,10 +35,12 @@ import sys
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from verify_flybook import DEPLOY_BLOCK, HUB, Rpc, k  # noqa: E402
+from verify_flybook import DEPLOY_BLOCK, HUB, THOUGHT, Rpc, genes64, k, phenotype  # noqa: E402
 
 PUPAE = "0x83547b1d4b9ce8fc469bed87b22d525e5c64fb20"
 CUT = 22_971_428  # CS-003 census close: the window opens at the next block
+SEL_BASE, SEL_SLOPE = 9, 4  # Ecology selectivityBase, selectivitySlope: unchanged by every EcologyChanged to date
+AXES = ["boldness", "sociability", "curiosity", "fidelity", "aggression"]  # Phenotype: loci 32-61, six each
 
 
 def topic(sig: str) -> str:
@@ -54,10 +60,11 @@ T = {n: topic(s) for n, s in {
 }.items()}
 NAME = {v: n for n, v in T.items()}
 
-PEDIGREE = ["fly", "route", "egg_or_pupa", "block", "owner", "mother", "father", "seed", "pick",
-            "maternal_loci", "mutated_loci", "genome"]
-COURTSHIP = ["block", "tx", "target", "suitor", "courter", "outcome", "fired", "selectivity", "egg"]
-THOUGHTS = ["fly", "tick", "block", "keeper", "senses", "fee_obrain", "input_agg", "synapses", "spiked", "regions", "death_at"]
+PEDIGREE = ["fly", "route", "egg_or_pupa", "block", "timestamp", "owner", "mother", "father", "seed", "tier", "pick",
+            "candidate_scores", "maternal_loci", "mutated_loci", "eyes", "body", "wings", "size"] + AXES + ["genome"]
+COURTSHIP = ["block", "timestamp", "tx", "target", "suitor", "courter", "outcome", "fired", "selectivity", "fidelity", "egg",
+             "target_tick", "input_agg", "synapses", "spiked", "cells"]
+THOUGHTS = ["fly", "tick", "block", "timestamp", "keeper", "senses", "fee_obrain", "input_agg", "synapses", "spiked", "regions", "death_at"]
 
 
 def logs(rpc: Rpc, topics: list, frm: int, to: int, address=None) -> list:
@@ -91,6 +98,25 @@ def cross(mother: list, father: list, seed: bytes) -> list:
     return child
 
 
+def axes(g: list) -> dict:
+    """Phenotype._axis: alleles * 12 + keccak(the six packed genes) mod 29, zero when the group is empty"""
+    out = {}
+    for i, name in enumerate(AXES):
+        genes = [gene(g, s) for s in range(32 + 6 * i, 38 + 6 * i)]
+        n = sum(v != 0 for v in genes)
+        out[name] = n * 12 + int.from_bytes(k(b"".join(v.to_bytes(4, "big") for v in genes)), "big") % 29 if n else 0
+    return out
+
+
+def pick(scores: list, tier: int) -> int:
+    """Pupae.pick: the highest score among the first 1, 2 or 4 candidates, the lowest index on a tie"""
+    best = 0
+    for i in range(1, 1 << (tier - 1)):
+        if scores[i] > scores[best]:
+            best = i
+    return best
+
+
 def hexgenome(g: list) -> str:
     return " ".join(f"{gene(g, s):08x}" for s in range(64))
 
@@ -120,13 +146,20 @@ def main() -> int:
     for x in hub:
         by[NAME[x["topics"][0]]].append(x)
 
-    G, gen, par, owner, born = {}, {}, {}, {}, {}
+    G, gen, par, owner, born, brain = {}, {}, {}, {}, {}, {}
     for x in by["Eclosed"]:
         f, w = int(x["topics"][1], 16), words(x["data"])
         G[f], gen[f], par[f], owner[f], born[f] = w[4:12], w[1], (w[2], w[3]), "0x" + x["topics"][2][-40:], int(x["blockNumber"], 16)
+        brain[f] = f"0x{w[0]:040x}"
+    window = [x for x in by["Thought"] if int(x["blockNumber"], 16) > CUT]
+    rulings = by["Accepted"] + by["Rejected"]
+    blocks = sorted(set(born.values()) | {int(x["blockNumber"], 16) for x in window + rulings})
+    when = {b: int(r["timestamp"], 16) for b, r in zip(blocks, rpc.batch([("eth_getBlockByNumber", [hex(b), False]) for b in blocks]))}
+    receipts = dict(zip([x["transactionHash"] for x in rulings],
+                        rpc.batch([("eth_getTransactionReceipt", [x["transactionHash"]]) for x in rulings])))
 
     bad, eggs, courtship = [], {}, []
-    for x in by["Accepted"] + by["Rejected"]:
+    for x in rulings:
         acc = NAME[x["topics"][0]] == "Accepted"
         t, s = int(x["topics"][1], 16), int(x["topics"][2], 16)
         w = words(x["data"])
@@ -136,9 +169,25 @@ def main() -> int:
             eggs[egg] = (t, s, w[1].to_bytes(32, "big"))
             if fired < sel:
                 bad.append(f"egg {egg}: accepted with fired {fired} < selectivity {sel}")
-        courtship.append({"block": int(x["blockNumber"], 16), "tx": x["transactionHash"], "target": t, "suitor": s,
-                          "courter": "0x" + x["data"][26:66],
-                          "outcome": "accepted" if acc else "rejected", "fired": fired, "selectivity": sel, "egg": egg})
+        # the target's own thought on the pheromone, in this transaction: the brain's Thought and the hub's
+        logs_ = receipts[x["transactionHash"]]["logs"]
+        soma = [y for y in logs_ if y["topics"][0] == THOUGHT and y["address"].lower() == brain[t]]
+        hubt = [y for y in logs_ if y["topics"][0] == T["Thought"] and int(y["topics"][1], 16) == t]
+        if len(soma) != 1 or len(hubt) != 1:
+            bad.append(f"courtship {x['transactionHash']}: {len(soma)} brain and {len(hubt)} hub Thoughts of target {t}")
+            continue
+        sw, hw = words(soma[0]["data"]), words(hubt[0]["data"])
+        raw = bytes.fromhex(soma[0]["data"][2:])[sw[5] + 32:sw[5] + 32 + sw[6]]
+        cells = [int.from_bytes(raw[i:i + 3], "big") for i in range(0, len(raw), 3)]
+        if hw[4] != fired:
+            bad.append(f"courtship {x['transactionHash']}: fired {fired} != regions[0] {hw[4]} of the target's Thought")
+        fid = axes(G[t])["fidelity"]
+        if sel != SEL_BASE + fid * SEL_SLOPE // 100:
+            bad.append(f"courtship {x['transactionHash']}: selectivity {sel} is not {SEL_BASE} + {fid} * {SEL_SLOPE} / 100")
+        courtship.append({"block": int(x["blockNumber"], 16), "timestamp": when[int(x["blockNumber"], 16)], "tx": x["transactionHash"],
+                          "target": t, "suitor": s, "courter": "0x" + x["data"][26:66], "outcome": "accepted" if acc else "rejected",
+                          "fired": fired, "selectivity": sel, "fidelity": fid, "egg": egg, "target_tick": int(soma[0]["topics"][1], 16),
+                          "input_agg": hex(sw[0]), "synapses": sw[1], "spiked": sw[2], "cells": " ".join(map(str, cells))})
     courtship.sort(key=lambda r: (r["block"], r["outcome"]))
     cooldown = sum(r["outcome"] == "rejected" and r["fired"] >= r["selectivity"] for r in courtship)
 
@@ -146,24 +195,27 @@ def main() -> int:
     for x in by["Laid"]:
         egg, f = int(x["topics"][1], 16), int(x["topics"][2], 16)
         m, fa, seed = eggs[egg]
-        rows.append((f, "egg", egg, m, fa, seed, ""))
+        rows.append((f, "egg", egg, m, fa, seed, "", "", ""))
     for x in by["PupaHatched"]:
         pupa, f = int(x["topics"][1], 16), int(x["topics"][2], 16)
-        pick = words(x["data"])[1]
+        tier, chosen = words(x["data"])[:2]
         m, fa = par[f]
-        rows.append((f, "pupa", pupa, m, fa, k(settled[pupa] + pick.to_bytes(32, "big")), pick))
+        scores = [sum(axes(cross(G[m], G[fa], k(settled[pupa] + i.to_bytes(32, "big")))).values()) for i in range(4)]
+        if chosen != pick(scores, tier):
+            bad.append(f"pupa {pupa}: tier {tier} over scores {scores} picks {pick(scores, tier)}, hatched {chosen}")
+        rows.append((f, "pupa", pupa, m, fa, k(settled[pupa] + chosen.to_bytes(32, "big")), tier, chosen, " ".join(map(str, scores))))
     pedigree = []
-    for f, route, src, m, fa, seed, pick in sorted(rows):
+    for f, route, src, m, fa, seed, tier, chosen, scores in sorted(rows):
         if par[f] != (m, fa) or gen[f] != 1:
             bad.append(f"fly {f}: Eclosed parents {par[f]} gen {gen[f]}, {route} {src} says ({m}, {fa})")
         if cross(G[m], G[fa], seed) != G[f]:
             bad.append(f"fly {f}: genome is not Meiosis.cross of {m} x {fa} under its {route} seed")
         bits = int.from_bytes(seed, "big")
         mu = [s for s in range(64) if mutated(seed, s)]
-        pedigree.append({"fly": f, "route": route, "egg_or_pupa": src, "block": born[f], "owner": owner[f], "mother": m,
-                         "father": fa, "seed": "0x" + seed.hex(), "pick": pick,
+        pedigree.append({"fly": f, "route": route, "egg_or_pupa": src, "block": born[f], "timestamp": when[born[f]], "owner": owner[f],
+                         "mother": m, "father": fa, "seed": "0x" + seed.hex(), "tier": tier, "pick": chosen, "candidate_scores": scores,
                          "maternal_loci": sum(bits >> s & 1 for s in range(64) if s not in mu),
-                         "mutated_loci": " ".join(map(str, mu)), "genome": hexgenome(G[f])})
+                         "mutated_loci": " ".join(map(str, mu)), **phenotype(genes64(G[f])), **axes(G[f]), "genome": hexgenome(G[f])})
     orphans = [f for f in G if gen[f] and f not in {r["fly"] for r in pedigree}]
     bad += [f"fly {f}: generation {gen[f]} with no egg or pupa" for f in orphans]
 
@@ -172,15 +224,13 @@ def main() -> int:
         sensed[(x["transactionHash"], int(x["topics"][1], 16))].append(x)
     courted = {(x["transactionHash"], int(x["topics"][1], 16)) for x in by["Courted"]}  # the target thinks on sensillum 0
     thoughts = []
-    for x in by["Thought"]:
-        if int(x["blockNumber"], 16) <= CUT:
-            continue
+    for x in window:
         f, w = int(x["topics"][1], 16), words(x["data"])
         ss = sensed.pop((x["transactionHash"], f), [])
         pheromone = not ss and (x["transactionHash"], f) in courted
         if not ss and not pheromone:
             bad.append(f"fly {f}: Thought in {x['transactionHash']} has neither Sensed nor Courted")
-        thoughts.append({"fly": f, "tick": w[0], "block": int(x["blockNumber"], 16), "keeper": "0x" + x["topics"][2][-40:],
+        thoughts.append({"fly": f, "tick": w[0], "block": int(x["blockNumber"], 16), "timestamp": when[int(x["blockNumber"], 16)], "keeper": "0x" + x["topics"][2][-40:],
                          "senses": "pheromone" if pheromone else " ".join(f"{words(s['data'])[0]}:{words(s['data'])[1]}" for s in ss),
                          "fee_obrain": sum(words(s["data"])[2] for s in ss) // 10**18, "input_agg": hex(w[1]),
                          "synapses": w[2], "spiked": w[3], "regions": " ".join(map(str, w[4:12])), "death_at": w[12]})
@@ -211,7 +261,9 @@ def main() -> int:
           f"Meiosis.cross reproduces {len(pedigree) - sum('Meiosis' in b for b in bad)}/{len(pedigree)}; "
           f"{mus} point mutations over {64 * len(pedigree)} loci (expected {0.02 * 64 * len(pedigree):.1f})")
     print(f"courtship: {len(by['Courted'])} courted, {len(eggs)} accepted, {len(courtship) - len(eggs)} rejected "
-          f"({cooldown} at or above threshold, i.e. cooldown), {len(eggs) - len(by['Laid'])} eggs unlaid")
+          f"({cooldown} at or above threshold, i.e. cooldown), {len(eggs) - len(by['Laid'])} eggs unlaid; fired is regions[0] "
+          f"of the target's own Thought and selectivity is {SEL_BASE} + fidelity x {SEL_SLOPE} / 100 of its genome in every ruling; "
+          f"{route['pupa']} pupa picks follow Pupae.pick")
     print(f"thoughts after block {CUT}: {len(thoughts)} by {len({t['keeper'] for t in thoughts})} keepers on "
           f"{len({t['fly'] for t in thoughts})} flies; head {head}; {len(bad)} mismatches")
     return 1 if bad else 0
