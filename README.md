@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_%C2%B7_CS--002_%C2%B7_CS--003-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--005-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
@@ -283,12 +283,16 @@ consensus.
 | `research/2026-09-22-brainstate-census/` | ticks 1-74 (blocks 21,181,651-22,041,291) | consensus-executed neurophysiology of the first five days: exhaustive `BrainState` census, byte-exact twin replay, sensory-epithelium dynamics |
 | `research/2026-09-26-flybook-founders/` | blocks 22,703,390-22,853,967 (first eclosion 22,821,848) | population genetics of the Flybook founder generation: 153 descendants on the Ancestor's own tapes, every genotype replayed from the chain, founder-pool structure, visible markers |
 | `research/2026-09-27-flybook-generation-zero/` | blocks 22,703,390-22,971,428 (last founder 22,964,932) | population biology of the closed founder generation: 333 founders replayed from the chain, demography, care, population dose-response, cryptic genetic variation at locus 0 |
+| `research/2026-10-01-flybook-first-offspring/` | blocks 22,971,429-23,713,175 (first courtship 23,399,299) | the first offspring generation: 49 courtships ruled by the targets' own brains, 33 children replayed as `Meiosis.cross` of their parents, Mendelian segregation, redrawn markers, heritable temperament (h² ≈ 0.8) |
+| `research/2026-10-07-flybook-life-table/` | blocks 23,713,176-24,657,020 (state pinned at 24,657,020) | the second breeding wave and the life table: 51 children (51/51), the priming law of courtship over 82 rulings, a market in studs, and every fly's clock re-derived from its logs (384/384): founders that fall dormant, a brood that is sterile and mortal |
 
 ```bash
 python3 tools/verify_census.py        # re-scan the chain, diff against the census
 python3 tools/verify_twin.py --fired $(cat research/2026-09-22-brainstate-census/data/poke_inputs.txt)
 python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/data/founder_census.csv
 python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-zero/data/founder_census.csv
+python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-table/data
+python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 ```
 
 ---
@@ -307,6 +311,8 @@ python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-z
 | `tools/verify_twin.py` | deterministic replay: given the afferent words, regenerates every spike list and `stateRoot()` |
 | `tools/verify_census.py` | re-scans `BrainState`/`Feed` logs from Arc and diffs them against a shipped census (stdlib only) |
 | `tools/verify_flybook.py` | re-derives every Flybook descendant from Arc: the species' tapes are the Ancestor's, each brain a `Connectome` clone, each founder genotype replayed from its block-hash seed, each last `Thought` committed to storage |
+| `tools/verify_generation1.py` | re-derives the offspring generation from Arc: each courtship ruling as `fired ≥ selectivity` from the target's own `Thought`, each child's genome as `Meiosis.cross` of its parents under the consensus seed, each pupa's hatch as its tier's pick, and the thought census |
+| `tools/verify_lifetable.py` | folds every fly's `Eclosed`, `Thought`, `Tended`, `Woke`, `Accepted` and `Transfer` logs into its expected clock and owner, and diffs them against `flyOf`, `deathAtOf`, `lifeOf` and `ownerOf` at a pinned block |
 | `research/` | field studies: report, figures, machine-readable data, verification logs |
 | `LICENSE`, `LICENSE-DATA` | the two licences: AGPL-3.0-only for code, CC BY-NC-SA 4.0 for derived data artifacts |
 | `foundry.toml` | build config (solc 0.8.28, via_ir, cancun) |
