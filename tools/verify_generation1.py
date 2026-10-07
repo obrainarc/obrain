@@ -24,9 +24,10 @@ with its Sensed logs, or marked `pheromone` when the transaction is the Courted 
 sensillum 0) with --out DIR; with --check DIR re-derives to the census' last block
 and diffs. Exits nonzero on any mismatch.
 
-    python3 tools/verify_generation1.py [--rpc URL] [--to BLOCK] [--out DIR] [--check DIR]
+    python3 tools/verify_generation1.py [--rpc URL] [--to BLOCK] [--out DIR] [--check DIR] [--fresh]
 
-Needs pycryptodome; shares verify_flybook.py's throttled JSON-RPC client.
+Needs pycryptodome; the JSON-RPC client is tools/chain.py (throttle, a cache of finalized logs,
+headers and receipts under ~/.cache/obrain; --fresh reads everything from the chain again).
 """
 import argparse
 import csv
@@ -65,13 +66,6 @@ PEDIGREE = ["fly", "route", "egg_or_pupa", "block", "timestamp", "owner", "mothe
 COURTSHIP = ["block", "timestamp", "tx", "target", "suitor", "courter", "outcome", "fired", "selectivity", "fidelity", "egg",
              "target_tick", "input_agg", "synapses", "spiked", "cells"]
 THOUGHTS = ["fly", "tick", "block", "timestamp", "keeper", "senses", "fee_obrain", "input_agg", "synapses", "spiked", "regions", "death_at"]
-
-
-def logs(rpc: Rpc, topics: list, frm: int, to: int, address=None) -> list:
-    """one getLogs per request: a 20-chunk batch over the busiest days outruns the 60 s timeout"""
-    f = dict({"topics": topics}, **({"address": address} if address else {}))
-    return [x for a in range(frm, to + 1, 9_999)
-            for x in rpc.batch([("eth_getLogs", [dict(f, fromBlock=hex(a), toBlock=hex(min(a + 9_998, to)))])])[0]]
 
 
 def words(data: str) -> list:
@@ -127,9 +121,10 @@ def main() -> int:
     ap.add_argument("--to", type=int)
     ap.add_argument("--out")
     ap.add_argument("--check")
+    ap.add_argument("--fresh", action="store_true", help="ignore the local cache; read everything from the chain")
     a = ap.parse_args()
-    rpc = Rpc(a.rpc)
-    head = int(rpc.batch([("eth_blockNumber", [])])[0], 16)
+    rpc = Rpc(a.rpc, cache=not a.fresh)
+    head = rpc.head
     to = a.to or head
     if a.check:
         with open(os.path.join(a.check, "pedigree.csv")) as fh:
@@ -139,9 +134,9 @@ def main() -> int:
         with open(os.path.join(a.check, "courtship.csv")) as fh:
             to = max([to] + [int(r["block"]) for r in csv.DictReader(fh)])
 
-    hub = sorted(logs(rpc, [[T[n] for n in ("Eclosed", "Courted", "Accepted", "Rejected", "Laid", "PupaHatched", "Thought", "Sensed")]],
-                               DEPLOY_BLOCK, to, HUB), key=lambda x: (int(x["blockNumber"], 16), int(x["logIndex"], 16)))
-    settled = {int(x["topics"][1], 16): bytes.fromhex(x["data"][2:66]) for x in logs(rpc, [T["PupaSettled"]], DEPLOY_BLOCK, to, PUPAE)}
+    hub = sorted(rpc.logs([[T[n] for n in ("Eclosed", "Courted", "Accepted", "Rejected", "Laid", "PupaHatched", "Thought", "Sensed")]],
+                          DEPLOY_BLOCK, to, HUB), key=lambda x: (int(x["blockNumber"], 16), int(x["logIndex"], 16)))
+    settled = {int(x["topics"][1], 16): bytes.fromhex(x["data"][2:66]) for x in rpc.logs([T["PupaSettled"]], DEPLOY_BLOCK, to, PUPAE)}
     by = defaultdict(list)
     for x in hub:
         by[NAME[x["topics"][0]]].append(x)
@@ -154,9 +149,8 @@ def main() -> int:
     window = [x for x in by["Thought"] if int(x["blockNumber"], 16) > CUT]
     rulings = by["Accepted"] + by["Rejected"]
     blocks = sorted(set(born.values()) | {int(x["blockNumber"], 16) for x in window + rulings})
-    when = {b: int(r["timestamp"], 16) for b, r in zip(blocks, rpc.batch([("eth_getBlockByNumber", [hex(b), False]) for b in blocks]))}
-    receipts = dict(zip([x["transactionHash"] for x in rulings],
-                        rpc.batch([("eth_getTransactionReceipt", [x["transactionHash"]]) for x in rulings])))
+    when = {b: int(h["timestamp"], 16) for b, h in rpc.blocks(blocks).items()}
+    receipts = rpc.receipts([x["transactionHash"] for x in rulings])
 
     bad, eggs, courtship = [], {}, []
     for x in rulings:

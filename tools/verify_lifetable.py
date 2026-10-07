@@ -26,10 +26,11 @@ diapause when a brood has not thought for diapauseAfter, else alive) against the
 Writes life_table.csv (one row per fly) with --out DIR; with --check DIR re-derives at the
 census' pinned block and diffs. Exits nonzero on any mismatch.
 
-    python3 tools/verify_lifetable.py [--rpc URL] [--to BLOCK] [--out DIR] [--check DIR]
+    python3 tools/verify_lifetable.py [--rpc URL] [--to BLOCK] [--out DIR] [--check DIR] [--fresh]
 
-Needs pycryptodome; shares verify_flybook.py's throttled JSON-RPC client. State reads are
-pinned at --to (or at head), so the RPC must serve that block's state.
+Needs pycryptodome; the JSON-RPC client is tools/chain.py (throttle, a cache of finalized logs
+and headers under ~/.cache/obrain, Multicall3 for the state reads; --fresh reads everything from
+the chain again). State reads are pinned at --to (or at head), so the RPC must serve that block.
 """
 import argparse
 import csv
@@ -39,7 +40,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from verify_flybook import DEPLOY_BLOCK, HUB, Rpc, k  # noqa: E402
-from verify_generation1 import logs, words  # noqa: E402
+from verify_generation1 import words  # noqa: E402
 
 AMBER = "0x82e820049cd4d1110f1560f2eed623305c704dee"
 P2_BLOCK = 23_384_885  # hub Upgraded + NurseryChanged: tended windows and fixed brood lives from here
@@ -97,9 +98,10 @@ def main() -> int:
     ap.add_argument("--to", type=int)
     ap.add_argument("--out")
     ap.add_argument("--check")
+    ap.add_argument("--fresh", action="store_true", help="ignore the local cache; read everything from the chain")
     a = ap.parse_args()
-    rpc = Rpc(a.rpc)
-    head = int(rpc.batch([("eth_blockNumber", [])])[0], 16)
+    rpc = Rpc(a.rpc, cache=not a.fresh)
+    head = rpc.head
     to = a.to or head
     shipped = None
     if a.check:
@@ -108,13 +110,13 @@ def main() -> int:
         with open(os.path.join(a.check, "PINNED_BLOCK")) as fh:
             to = int(fh.read().split()[0])
     rpc.at = hex(to)
-    now = int(rpc.batch([("eth_getBlockByNumber", [hex(to), False])])[0]["timestamp"], 16)
+    now = int(rpc.blocks([to])[to]["timestamp"], 16)
 
-    hub = logs(rpc, [[T[n] for n in NAME.values() if n != "Interred"]], DEPLOY_BLOCK, to, HUB)
-    interred = logs(rpc, [T["Interred"]], DEPLOY_BLOCK, to, AMBER)
+    hub = rpc.logs([[T[n] for n in NAME.values() if n != "Interred"]], DEPLOY_BLOCK, to, HUB)
+    interred = rpc.logs([T["Interred"]], DEPLOY_BLOCK, to, AMBER)
     hub.sort(key=lambda x: (int(x["blockNumber"], 16), int(x["logIndex"], 16)))
     blocks = sorted({int(x["blockNumber"], 16) for x in hub})
-    when = {b: int(r["timestamp"], 16) for b, r in zip(blocks, rpc.batch([("eth_getBlockByNumber", [hex(b), False]) for b in blocks]))}
+    when = {b: int(h["timestamp"], 16) for b, h in rpc.blocks(blocks).items()}
 
     # the fold
     F, keeper, owner, transfers, children, wokes, expected_wokes, observed_wokes, bad = {}, {}, {}, Counter(), Counter(), Counter(), [], [], []
@@ -169,7 +171,7 @@ def main() -> int:
 
     # the pinned state
     ids = sorted(F)
-    reads = rpc.batch([rpc.call(HUB, SEL[s] + f"{f:064x}") for f in ids for s in SEL])
+    reads = rpc.multicall([(HUB, SEL[s] + f"{f:064x}") for f in ids for s in SEL])
     rows = []
     for i, f in enumerate(ids):
         r = dict(zip(SEL, reads[i * len(SEL):(i + 1) * len(SEL)]))

@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--005-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--006-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -197,6 +197,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-09-27-flybook-generation-zero/` | 区块 22,703,390-22,971,428（最后一个奠基者 22,964,932） | 已封闭奠基世代的种群生物学：333 个奠基者均由链上重放，种群统计、照料、种群剂量-反应、0 号位点的隐性遗传变异 |
 | `research/2026-10-01-flybook-first-offspring/` | 区块 22,971,429-23,713,175（首次求偶 23,399,299） | 第一代子代：49 次求偶由目标自己的大脑裁决，33 个子代作为双亲的 `Meiosis.cross` 重放，孟德尔分离、重抽的标记、可遗传的气质（h² ≈ 0.8） |
 | `research/2026-10-07-flybook-life-table/` | 区块 23,713,176-24,657,020（状态钉在 24,657,020） | 第二波繁殖与生命表：51 个子代（51/51）、82 次裁决中的求偶启动定律、种公市场，以及每只果蝇的时钟均由其日志重新推导（384/384）：会休眠的奠基者，不育且会死的子代 |
+| `research/2026-10-07-flybook-clone-twin/` | 366 个大脑，至区块 24,657,020 的 4,331 次思维 | 每个后代大脑的链上精确孪生（4,331/4,331 次思维复现至根哈希）：以量子读出求偶残余电荷、使输入层之外细胞发放的四步机制、以及 142 个大脑中等待的 969 个潜在脉冲 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
@@ -205,6 +206,7 @@ python3 tools/verify_flybook.py --check research/2026-09-26-flybook-founders/dat
 python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-zero/data/founder_census.csv
 python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
+python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 ```
 
 ---
@@ -225,6 +227,8 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 | `tools/verify_flybook.py` | 自 Arc 重新推导每个 Flybook 后代：物种磁带即祖先磁带，每个大脑为 `Connectome` 克隆，每个奠基基因型由区块哈希种子重放，最后一次 `Thought` 与存储一致 |
 | `tools/verify_generation1.py` | 从 Arc 重新推导子代：每次求偶裁决为目标自身 `Thought` 的 `fired ≥ selectivity`，每个子代基因组为双亲在共识种子下的 `Meiosis.cross`，每个蛹的孵化为其层级的选择，以及思维普查 |
 | `tools/verify_lifetable.py` | 把每只果蝇的 `Eclosed`、`Thought`、`Tended`、`Woke`、`Accepted`、`Transfer` 日志折叠为预期的时钟与所有者，并在钉定区块与 `flyOf`、`deathAtOf`、`lifeOf`、`ownerOf` 比对 |
+| `tools/chain.py` | 三个 Flybook 审计共用的 JSON-RPC 客户端：限速批量、已最终化日志/区块头/收据的本地缓存（`~/.cache/obrain`）、以 Multicall3 读状态；任一工具加 `--fresh` 则全部重新从链上读取 |
+| `tools/vclone.py`、`tools/verify_clones.py` | Flybook 大脑的链上精确孪生（Python 实现的 `Connectome.think`，含基因组叠加与根折叠）及审计：从基因组与输入词重放每个大脑的一生，并与其自身日志比对突触、脉冲、发放细胞与根 |
 | `research/` | 田野研究：报告、图、机器可读数据、验证日志 |
 | `LICENSE`、`LICENSE-DATA` | 两份许可：代码 AGPL-3.0-only，衍生数据工件 CC BY-NC-SA 4.0 |
 | `foundry.toml` | 构建配置（solc 0.8.28、via_ir、cancun） |

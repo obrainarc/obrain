@@ -11,10 +11,11 @@ report, figures, machine-readable data, verification artifacts, and
 | CS-003 | *The founder generation closed: demography, care, sensory ecology and cryptic genetic variation in 333 Drosophila descendants of the obrain connectome* | blocks 22,703,390-22,971,428, 2026-09-26 to 2026-09-27 |
 | CS-004 | *The first offspring: courtship neurophysiology, genotype-dependent mate choice and Mendelian inheritance in 33 G1 Drosophila of the obrain connectome* | blocks 22,971,429-23,713,175, 2026-09-27 to 2026-10-01 |
 | CS-005 | *A quiet week: the second breeding wave, a sterile offspring generation, the priming law of courtship and the life table of 384 *Drosophila* of the obrain connectome* | blocks 23,713,176-24,657,020, 2026-10-01 to 2026-10-07 |
+| CS-006 | *Every descendant replayed: a chain-exact twin of the Flybook brains, the courtship residual at the membrane, and the latent spikes of 169,088 cells* | 366 brains, 4,331 thoughts to block 24,657,020 |
 
 CS-001 is published in English, Chinese (`.zh.md`), Japanese (`.ja.md`),
 Vietnamese (`.vi.md`) and Hindi (`.hi.md`) editions; data, figures and
-verification artifacts are shared between them. CS-002 to CS-005 are published in English.
+verification artifacts are shared between them. CS-002 to CS-006 are published in English.
 
 To re-audit a census against the living chain, from the repository root:
 
@@ -40,3 +41,9 @@ To re-derive the cumulative pedigree, courtships and thoughts to CS-005's census
 
     python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-table/data
     python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
+
+The three Flybook tools keep finalized logs and headers in `~/.cache/obrain` so a later study fetches only its own window; the verification run shipped with each study is made with `--fresh`, which reads everything from the chain again.
+
+To replay every brain of the population with the twin and diff it against the chain (CS-006):
+
+    python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data

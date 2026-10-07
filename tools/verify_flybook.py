@@ -17,19 +17,21 @@ tapes. For every `Eclosed` log this re-derives from consensus alone:
 and writes the founder census (immutable fields only) with --out. Exits nonzero on any
 mismatch. With --check CSV it re-derives up to that census' last block and diffs it.
 
-    python3 tools/verify_flybook.py [--rpc URL] [--out CSV] [--check CSV]
+    python3 tools/verify_flybook.py [--rpc URL] [--out CSV] [--check CSV] [--fresh]
 
-Needs pycryptodome (as verify_twin.py does); batched JSON-RPC, 9,999-block getLogs chunks.
+Needs pycryptodome (as verify_twin.py does). The JSON-RPC client is tools/chain.py: finalized
+logs and headers are cached under ~/.cache/obrain, state is read through Multicall3; --fresh
+reads everything from the chain again.
 """
 import argparse
 import csv
-import json
+import os
 import sys
-import time
-import urllib.request
 from collections import Counter
 
 from Crypto.Hash import keccak
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 HUB = "0x14b557957d378b56511785b408a21c93e79feb36"
 HOLOTYPE = "0xb0725bf519786c8d2798e99d45c8c7fe886be73b"
@@ -72,51 +74,7 @@ def genes64(words: list) -> list:
     return [(words[s >> 3] >> ((s & 7) * 32)) & 0xFFFFFFFF for s in range(64)]
 
 
-class Rpc:
-    def __init__(self, url: str):
-        self.url = url
-
-    def batch(self, calls: list, tries: int = 12) -> list:
-        """calls: [(method, params)] -> results in order. Arc throttles at about 20 requests a
-        burst (-32005), so calls go 20 at a time and only the throttled ones are retried."""
-        out = [None] * len(calls)
-        todo = list(range(len(calls)))
-        for attempt in range(tries):
-            for i in range(0, len(todo), 20):
-                ids = todo[i:i + 20]
-                body = json.dumps([{"jsonrpc": "2.0", "id": j, "method": calls[j][0], "params": calls[j][1]} for j in ids]).encode()
-                try:
-                    req = urllib.request.Request(self.url, data=body, headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 verify_flybook/1.0"})
-                    with urllib.request.urlopen(req, timeout=60) as r:
-                        for x in json.loads(r.read()):
-                            if "result" in x:
-                                out[x["id"]] = x["result"]
-                            elif x.get("error", {}).get("code") != -32005:
-                                raise SystemExit(f"rpc error {x['error']} on {calls[x['id']]}")
-                except (urllib.error.URLError, TimeoutError):
-                    pass
-                time.sleep(1.0)
-            todo = [j for j in todo if out[j] is None]
-            if not todo:
-                return out
-            time.sleep(2 * (attempt + 1))
-        raise SystemExit(f"rpc failed after {tries} tries: {calls[todo[0]]}")
-
-    def call(self, to: str, data: str) -> tuple:
-        return ("eth_call", [{"to": to, "data": data}, self.at])
-
-    def logs(self, topics: list, frm: int, to: int, address=None) -> list:
-        """9,999-block chunks, one request each: a 20-chunk batch over the busiest days outruns
-        the 60 s timeout (as verify_generation1.py found; the Thought topic outgrew it by 2026-10)"""
-        f = {"topics": topics}
-        if address:
-            f["address"] = address
-        return [log for a in range(frm, to + 1, 9_999)
-                for log in self.batch([("eth_getLogs", [dict(f, fromBlock=hex(a), toBlock=hex(min(a + 9_998, to)))])])[0]]
-
-
-def word(n: int) -> str:
-    return f"{n:064x}"
+from chain import Rpc, word  # noqa: E402  (the shared client: throttle, cache, Multicall3)
 
 
 def main() -> int:
@@ -124,18 +82,19 @@ def main() -> int:
     ap.add_argument("--rpc", default="https://rpc.mainnet.arc.io")
     ap.add_argument("--out", help="write the founder census CSV here")
     ap.add_argument("--check", help="re-derive this census up to its last block and diff")
+    ap.add_argument("--fresh", action="store_true", help="ignore the local cache; read everything from the chain")
     a = ap.parse_args()
-    rpc = Rpc(a.rpc)
+    rpc = Rpc(a.rpc, cache=not a.fresh)
     shipped = list(csv.DictReader(open(a.check))) if a.check else None
-    head = int(rpc.batch([("eth_blockNumber", [])])[0], 16)
+    head = rpc.head
     rpc.at = hex(head)  # every read at one block, so a fly thinking mid-run cannot race the check
     to = max(int(r["block"]) for r in shipped) if shipped else head
     bad = []
 
     # wiring: the species reads the Ancestor's tapes
-    got = rpc.batch([rpc.call(HOLOTYPE, SEL["tape"] + word(i)) for i in range(85)] +
-                    [rpc.call(ANCESTOR, SEL["tapes"] + word(i)) for i in range(85)] +
-                    [rpc.call(HOLOTYPE, SEL["configHash"])])
+    got = rpc.multicall([(HOLOTYPE, SEL["tape"] + word(i)) for i in range(85)] +
+                        [(ANCESTOR, SEL["tapes"] + word(i)) for i in range(85)] +
+                        [(HOLOTYPE, SEL["configHash"])])
     same = sum(got[i] == got[85 + i] for i in range(85))
     bad += [f"tape {i}" for i in range(85) if got[i] != got[85 + i]]
     print(f"wiring: Holotype.tape(i) == Ancestor.tapes(i) {same}/85, configHash {got[170]}")
@@ -149,19 +108,19 @@ def main() -> int:
                       "generation": w[1], "mother": w[2], "father": w[3], "genes": genes64(w[4:12]), "words": w[4:12],
                       "block": int(log["blockNumber"], 16)})
     blocks = sorted({f["block"] - 1 for f in flies})
-    hashes = dict(zip(blocks, (b["hash"] for b in rpc.batch([("eth_getBlockByNumber", [hex(b), False]) for b in blocks]))))
-    per = ["brainOf", "code", "holotype", "genome", "rootDirty", "tick"]
-    reads = rpc.batch([c for f in flies for c in (
-        rpc.call(HUB, SEL["brainOf"] + word(f["fly"])), ("eth_getCode", [f["brain"], rpc.at]),
-        rpc.call(f["brain"], SEL["holotype"]), rpc.call(f["brain"], SEL["genome"]),
-        rpc.call(f["brain"], SEL["rootDirty"]), rpc.call(f["brain"], SEL["tick"]))])
+    hashes = {b: h["hash"] for b, h in rpc.blocks(blocks).items()}
+    per = ["brainOf", "holotype", "genome", "rootDirty", "tick"]
+    state = rpc.multicall([c for f in flies for c in (
+        (HUB, SEL["brainOf"] + word(f["fly"])), (f["brain"], SEL["holotype"]), (f["brain"], SEL["genome"]),
+        (f["brain"], SEL["rootDirty"]), (f["brain"], SEL["tick"]))])
+    codes = rpc.batch([("eth_getCode", [f["brain"], rpc.at]) for f in flies])
     thoughts = {}
-    for log in rpc.logs([THOUGHT], DEPLOY_BLOCK, head):
+    for log in rpc.logs([THOUGHT], DEPLOY_BLOCK, head, [f["brain"] for f in flies]):  # every brain's own Thought logs
         thoughts.setdefault(log["address"].lower(), []).append(log)
 
     rows, thinkers = [], 0
     for n, f in enumerate(flies):
-        r = dict(zip(per, reads[n * len(per):(n + 1) * len(per)]))
+        r = dict(zip(per, state[n * len(per):(n + 1) * len(per)]), code=codes[n])
         fly, brain = f["fly"], f["brain"]
         if r["brainOf"][-40:] != brain[2:]:
             bad.append(f"fly {fly}: brainOf {r['brainOf']} != Eclosed brain {brain}")

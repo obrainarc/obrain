@@ -54,7 +54,7 @@ The organs are those of CS-004, section 2.1: the hub (`Drosophila`, `0x14b557957
 
 ### 2.3 Courtship, inheritance, the pupa route
 
-As in CS-004, section 2.3. The ruling counts `regions[0]` of the target's thought on the pheromone (tier 1, charge 127, into sensillum 0) against `9 + fidelity × 4 / 100`. The kernel's leak is `0.98` per tick, applied lazily to a word by the number of ticks since it was last touched (`Connectome.think`), so a residual charge left in a cell decays by 0.98^Δt whatever the wall-clock time.
+As in CS-004, section 2.3. The ruling counts `regions[0]` of the target's thought on the pheromone (tier 1, charge 127, into sensillum 0) against `9 + fidelity × 4 / 100`. The kernel's leak is `0.98` per tick for segment 0, which every thought visits (`Connectome.think`), so a residual charge left in a cell of the input layer decays by 0.98^Δt whatever the wall-clock time. *Erratum (CS-006):* a word of any other segment is decayed lazily, at its next visit, by the table entry for the ticks since its last visit, 0.98^(2^(Δt − 1)), not 0.98^Δt; the statements about column 2 are unaffected.
 
 ### 2.4 The census and the life table
 
