@@ -1,0 +1,4 @@
+a002cea8625b47f012341453fd2a9141d131a4448f62552e88445ecdec69ebc5  research/2026-10-08-flybook-predictions/data/predictions.csv
+d486d8f6659bcb371545d3e69ab0fcfb0accbfb344eefc0bcc9995b0c4679802  research/2026-10-08-flybook-predictions/data/waiting.csv
+46b20b6b790c867c0798a164637aa3aafe2f10f45c43af9b433e6bca53fd8af1  research/2026-10-08-flybook-predictions/data/REGISTERED_BLOCK
+ef61f4641d2db237945c6be534813e8148d696b756e53ea2e8ffa60049112979  tools/predict_next.py
