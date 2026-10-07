@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--006-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--007-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#लाइसेंस-और-उद्धरण)
 
@@ -198,6 +198,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-01-flybook-first-offspring/` | ब्लॉक 22,971,429-23,713,175 (पहला प्रणय-निवेदन 23,399,299) | पहली संतति पीढ़ी: 49 प्रणय-निवेदन लक्ष्य के अपने मस्तिष्क द्वारा निर्णीत, 33 संतानें माता-पिता के `Meiosis.cross` के रूप में पुनः निकाली गईं, मेंडलीय पृथक्करण, पुनः खींचे गए मार्कर, वंशागत स्वभाव (h² ≈ 0.8) |
 | `research/2026-10-07-flybook-life-table/` | ब्लॉक 23,713,176-24,657,020 (स्थिति 24,657,020 पर स्थिर) | दूसरी प्रजनन लहर और जीवन-सारणी: 51 संतानें (51/51), 82 निर्णयों से प्रणय का प्राइमिंग नियम, नर-प्रजनकों का बाज़ार, और हर मक्खी की घड़ी उसके लॉग से पुनः निकाली गई (384/384): सुप्त होने वाले संस्थापक, बाँझ और मर्त्य संतति |
 | `research/2026-10-07-flybook-clone-twin/` | 366 मस्तिष्क, ब्लॉक 24,657,020 तक 4,331 विचार | हर वंशज के मस्तिष्क का चेन-सटीक जुड़वाँ (4,331/4,331 विचार रूट तक पुनरुत्पादित): प्रणय का अवशेष क्वांटा में पढ़ा गया, इनपुट परत के बाहर की कोशिका के दागने की चार-चरण क्रियाविधि, और 142 मस्तिष्कों में प्रतीक्षारत 969 सुप्त स्पाइक |
+| `research/2026-10-08-flybook-predictions/` | ब्लॉक 24,700,042 पर पंजीकृत | पूर्व-पंजीकृत भविष्यवाणियाँ: हर मस्तिष्क और 57 पालक-उद्दीपनों में से हर एक के लिए स्पाइक संख्या, प्रणय-क्षेत्र गणना और वह रूट जो वह कमिट करेगा (22,335 पंक्तियाँ, किसी के परखे जाने से पहले हैश की गईं), हर संस्थापक के अगले प्रणय का निर्णय, और 1,032 प्रतीक्षारत आवेशों में से 51 जिन्हें आलसी क्षय ने अभी छोड़ा नहीं |
 
 ```bash
 python3 tools/verify_census.py        # शृंखला पुनः स्कैन करें, जनगणना से तुलना करें
@@ -207,6 +208,7 @@ python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-z
 python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
+python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 ```
 
 ---
@@ -229,6 +231,7 @@ python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/da
 | `tools/verify_lifetable.py` | हर मक्खी के `Eclosed`, `Thought`, `Tended`, `Woke`, `Accepted`, `Transfer` लॉग को अपेक्षित घड़ी और स्वामी में मोड़ता है, और स्थिर ब्लॉक पर `flyOf`, `deathAtOf`, `lifeOf`, `ownerOf` से मिलान करता है |
 | `tools/chain.py` | तीनों Flybook ऑडिट का साझा JSON-RPC क्लाइंट: सीमित बैच, अंतिम हो चुके लॉग, हेडर और रसीदों का कैश (`~/.cache/obrain`), स्थिति पढ़ने के लिए Multicall3; किसी भी टूल पर `--fresh` सब कुछ फिर चेन से पढ़ता है |
 | `tools/vclone.py`, `tools/verify_clones.py` | Flybook मस्तिष्क का चेन-सटीक जुड़वाँ (Python में `Connectome.think`, जीनोम ओवरले और रूट फोल्ड सहित) और वह ऑडिट जो हर मस्तिष्क का जीवन उसके जीनोम और इनपुट शब्दों से दोहराकर सिनैप्स, स्पाइक, दागी कोशिकाएँ और रूट उसके अपने लॉग से मिलाता है |
+| `tools/predict_next.py` | जुड़वाँ को किसी ब्लॉक पर हर मस्तिष्क की स्थिति में लाकर पंजीकृत करता है कि वह अगले विचार में 19 संवेदिका × 3 स्तर और फेरोमोन पर क्या करेगा (बकेट, स्पाइक, प्रणय गणना, इनपुट परत के बाहर की कोशिकाएँ, रूट), और सीमा से ऊपर प्रतीक्षारत कोशिकाएँ; `--check` पुनः उत्पन्न कर मिलान करता है |
 | `research/` | क्षेत्र-अध्ययन: प्रतिवेदन, आकृतियाँ, मशीन-पठनीय डेटा, सत्यापन लॉग |
 | `LICENSE`, `LICENSE-DATA` | दो लाइसेंस: कोड हेतु AGPL-3.0-only, व्युत्पन्न डेटा-वस्तुओं हेतु CC BY-NC-SA 4.0 |
 | `foundry.toml` | बिल्ड विन्यास (solc 0.8.28, via_ir, cancun) |

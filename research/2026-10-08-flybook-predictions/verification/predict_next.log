@@ -1,0 +1,3 @@
+predictions.csv: 22335 rows, identical
+waiting.csv: 1032 rows, identical
+386 brains at block 24700042: 22335 predicted next thoughts (94 fire outside the input layer), 1032 cells waiting above threshold in 149 brains; head 24701763; 0 mismatches

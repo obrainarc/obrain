@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.ja.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--006-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--007-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#ライセンスと引用)
 
@@ -198,6 +198,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-01-flybook-first-offspring/` | ブロック 22,971,429-23,713,175（最初の求愛 23,399,299） | 最初の子世代：49 件の求愛を標的自身の脳が裁定、33 個体を両親の `Meiosis.cross` として再現、メンデル分離、引き直されるマーカー、遺伝する気質（h² ≈ 0.8） |
 | `research/2026-10-07-flybook-life-table/` | ブロック 23,713,176-24,657,020（状態は 24,657,020 に固定） | 第二の繁殖波と生命表：51 個体（51/51）、82 件の裁定から読む求愛のプライミング則、種雄の市場、全個体の時計をログから再導出（384/384）：休眠する創始個体、不妊で死ぬ子世代 |
 | `research/2026-10-07-flybook-clone-twin/` | 366 の脳、ブロック 24,657,020 までの 4,331 思考 | 全子孫の脳のチェーン厳密な双生体（4,331/4,331 思考をルートまで再現）：求愛の残留電荷を量子で読み、入力層外の細胞が発火する四段階の機構、142 の脳で待つ 969 の潜在スパイク |
+| `research/2026-10-08-flybook-predictions/` | ブロック 24,700,042 で登録 | 事前登録された予測：各脳が 57 の飼い主刺激それぞれで示すスパイク数・求愛領域の数・コミットするルート（22,335 行、検証前にハッシュ済み）、各創始個体の次の求愛の裁定、待機する 1,032 の電荷のうち怠惰な減衰にまだ取り残されていない 51 |
 
 ```bash
 python3 tools/verify_census.py        # 鎖を再走査し、センサスと比較する
@@ -207,6 +208,7 @@ python3 tools/verify_flybook.py --check research/2026-09-27-flybook-generation-z
 python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
+python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 ```
 
 ---
@@ -229,6 +231,7 @@ python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/da
 | `tools/verify_lifetable.py` | 各個体の `Eclosed`・`Thought`・`Tended`・`Woke`・`Accepted`・`Transfer` ログを期待される時計と所有者に畳み込み、固定ブロックの `flyOf`・`deathAtOf`・`lifeOf`・`ownerOf` と突き合わせる |
 | `tools/chain.py` | 三つの Flybook 監査が共有する JSON-RPC クライアント：抑速バッチ、確定済みログ・ヘッダ・レシートのキャッシュ（`~/.cache/obrain`）、状態読み取りの Multicall3；どのツールも `--fresh` で全てをチェーンから読み直す |
 | `tools/vclone.py`、`tools/verify_clones.py` | Flybook の脳のチェーン厳密な双生体（Python の `Connectome.think`、ゲノムのオーバーレイとルートの畳み込みを含む）と、各脳の生涯をゲノムと入力語から再生してシナプス・スパイク・発火 id・ルートを脳自身のログと突き合わせる監査 |
+| `tools/predict_next.py` | 双生体をあるブロックの各脳の状態に置き、19 感覚子 × 3 段とフェロモンに対する次の思考（バケット、スパイク、求愛数、入力層外の細胞、ルート）と閾値上で待つ細胞を登録する；`--check` で再生成して突き合わせる |
 | `research/` | フィールド研究：報告、図、機械可読データ、検証ログ |
 | `LICENSE`、`LICENSE-DATA` | 二つのライセンス：コードは AGPL-3.0-only、派生データ成果物は CC BY-NC-SA 4.0 |
 | `foundry.toml` | ビルド設定（solc 0.8.28、via_ir、cancun） |
