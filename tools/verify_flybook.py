@@ -106,11 +106,13 @@ class Rpc:
         return ("eth_call", [{"to": to, "data": data}, self.at])
 
     def logs(self, topics: list, frm: int, to: int, address=None) -> list:
+        """9,999-block chunks, one request each: a 20-chunk batch over the busiest days outruns
+        the 60 s timeout (as verify_generation1.py found; the Thought topic outgrew it by 2026-10)"""
         f = {"topics": topics}
         if address:
             f["address"] = address
-        calls = [("eth_getLogs", [dict(f, fromBlock=hex(a), toBlock=hex(min(a + 9_998, to)))]) for a in range(frm, to + 1, 9_999)]
-        return [log for chunk in self.batch(calls) for log in chunk]
+        return [log for a in range(frm, to + 1, 9_999)
+                for log in self.batch([("eth_getLogs", [dict(f, fromBlock=hex(a), toBlock=hex(min(a + 9_998, to)))])])[0]]
 
 
 def word(n: int) -> str:

@@ -1,0 +1,6 @@
+pedigree.csv: 51 rows, identical
+courtship.csv: 82 rows, identical
+thought_census.csv: 3482 rows, identical
+G1 to block 24655295: 51 children (32 by egg, 19 by pupa), Meiosis.cross reproduces 51/51; 72 point mutations over 3264 loci (expected 65.3)
+courtship: 82 courted, 45 accepted, 37 rejected (0 at or above threshold, i.e. cooldown), 13 eggs unlaid; fired is regions[0] of the target's own Thought and selectivity is 9 + fidelity x 4 / 100 of its genome in every ruling; 19 pupa picks follow Pupae.pick
+thoughts after block 22971428: 3482 by 155 keepers on 336 flies; head 24665722; 0 mismatches
