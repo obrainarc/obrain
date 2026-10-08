@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--007-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--008-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -199,6 +199,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-07-flybook-life-table/` | 区块 23,713,176-24,657,020（状态钉在 24,657,020） | 第二波繁殖与生命表：51 个子代（51/51）、82 次裁决中的求偶启动定律、种公市场，以及每只果蝇的时钟均由其日志重新推导（384/384）：会休眠的奠基者，不育且会死的子代 |
 | `research/2026-10-07-flybook-clone-twin/` | 366 个大脑，至区块 24,657,020 的 4,331 次思维 | 每个后代大脑的链上精确孪生（4,331/4,331 次思维复现至根哈希）：以量子读出求偶残余电荷、使输入层之外细胞发放的四步机制、以及 142 个大脑中等待的 969 个潜在脉冲 |
 | `research/2026-10-08-flybook-predictions/` | 登记于区块 24,700,042 | 事前登记的预测：每个大脑在 57 种饲主刺激下的脉冲数、求偶区计数与将提交的根（22,335 行，在任何一条被检验前已哈希），每个奠基者下一次求偶的裁决，以及 1,032 个等待电荷中尚未被惰性衰减搁浅的 51 个 |
+| `research/2026-10-08-flybook-economy/` | 区块 22,703,390-24,876,596 | 把种群当作市场：支付 7,600 万 OBRAIN、赚得 2,200 万（93 % 为启动期发行，2.6 % 为种费与订单），每个事件时刻的 OBRAIN/USDC 价格，23 笔 Seaport 成交按子代数而非可遗传性状定价，以及 x402 的 exact 方案（Arc 上 USDC 的 EIP-3009）能通过 HTTP 出售一次思维的链上核验 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
@@ -209,6 +210,7 @@ python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-tab
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
+python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
 ```
 
 ---
@@ -232,6 +234,7 @@ python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/da
 | `tools/chain.py` | 三个 Flybook 审计共用的 JSON-RPC 客户端：限速批量、已最终化日志/区块头/收据的本地缓存（`~/.cache/obrain`）、以 Multicall3 读状态；任一工具加 `--fresh` 则全部重新从链上读取 |
 | `tools/vclone.py`、`tools/verify_clones.py` | Flybook 大脑的链上精确孪生（Python 实现的 `Connectome.think`，含基因组叠加与根折叠）及审计：从基因组与输入词重放每个大脑的一生，并与其自身日志比对突触、脉冲、发放细胞与根 |
 | `tools/predict_next.py` | 把孪生带到某区块每个大脑的状态，登记其下一次思维在 19 个感器 × 3 层与信息素下会做什么（桶、脉冲、求偶计数、输入层外细胞、根），以及阈上等待的细胞；`--check` 重新生成并比对 |
+| `tools/verify_economy.py` | 以 OBRAIN 与 USDC 重新推导每只果蝇的成本与收入（羽化价、照料、种费、育婴订单、账本领取）、每笔二级成交及其 USDC 价格，以及由 Uniswap v4 交换得到的池价序列 |
 | `research/` | 田野研究：报告、图、机器可读数据、验证日志 |
 | `LICENSE`、`LICENSE-DATA` | 两份许可：代码 AGPL-3.0-only，衍生数据工件 CC BY-NC-SA 4.0 |
 | `foundry.toml` | 构建配置（solc 0.8.28、via_ir、cancun） |

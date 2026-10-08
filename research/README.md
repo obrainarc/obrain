@@ -13,10 +13,11 @@ report, figures, machine-readable data, verification artifacts, and
 | CS-005 | *A quiet week: the second breeding wave, a sterile offspring generation, the priming law of courtship and the life table of 384 *Drosophila* of the obrain connectome* | blocks 23,713,176-24,657,020, 2026-10-01 to 2026-10-07 |
 | CS-006 | *Every descendant replayed: a chain-exact twin of the Flybook brains, the courtship residual at the membrane, and the latent spikes of 169,088 cells* | 366 brains, 4,331 thoughts to block 24,657,020 |
 | CS-007 | *Registered before the fact: what each of 386 brains does at its next thought, the ruling of every founder's next courtship, and which of 1,032 waiting charges can still fire* | registered at block 24,700,042, 2026-10-07 |
+| CS-008 | *The economy of the organism: what 390 brains earned, cost and sold for on Arc, and whether a thought can be bought over HTTP* | blocks 22,703,390-24,876,596, census 2026-10-08 |
 
 CS-001 is published in English, Chinese (`.zh.md`), Japanese (`.ja.md`),
 Vietnamese (`.vi.md`) and Hindi (`.hi.md`) editions; data, figures and
-verification artifacts are shared between them. CS-002 to CS-007 are published in English.
+verification artifacts are shared between them. CS-002 to CS-008 are published in English.
 
 To re-audit a census against the living chain, from the repository root:
 
@@ -52,3 +53,7 @@ To replay every brain of the population with the twin and diff it against the ch
 To regenerate CS-007's register of predictions at its block and diff it:
 
     python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
+
+To re-derive the population's accounts, sales and the OBRAIN price series (CS-008):
+
+    python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data

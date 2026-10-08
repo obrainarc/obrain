@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--007-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--008-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
@@ -328,6 +328,7 @@ consensus.
 | `research/2026-10-07-flybook-life-table/` | blocks 23,713,176-24,657,020 (state pinned at 24,657,020) | the second breeding wave and the life table: 51 children (51/51), the priming law of courtship over 82 rulings, a market in studs, and every fly's clock re-derived from its logs (384/384): founders that fall dormant, a brood that is sterile and mortal |
 | `research/2026-10-07-flybook-clone-twin/` | 366 brains, 4,331 thoughts to block 24,657,020 | a chain-exact twin of every descendant's brain (4,331/4,331 thoughts reproduced to the root): the courtship residual read in quanta, the four-step mechanism that fires a cell outside the input layer, and 969 latent spikes waiting in 142 brains |
 | `research/2026-10-08-flybook-predictions/` | registered at block 24,700,042 | pre-registered predictions: for every brain and each of 57 keeper stimuli the spike count, the courtship-region count and the root it would commit (22,335 rows, hashed before any was tested), the ruling of every founder's next courtship, and the 51 of 1,032 waiting charges the lazy decay has not yet stranded |
+| `research/2026-10-08-flybook-economy/` | blocks 22,703,390-24,876,596 | the population as a market: 76 M OBRAIN paid, 22 M earned (93 % launch emission, 2.6 % stud fees and asks), the OBRAIN/USDC price at every event, 23 Seaport sales priced by children rather than by heritable traits, and the on-chain checks that x402's exact scheme (EIP-3009 on Arc's USDC) can sell a thought over HTTP |
 
 ```bash
 python3 tools/verify_census.py        # re-scan the chain, diff against the census
@@ -338,6 +339,7 @@ python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-tab
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
+python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
 ```
 
 ---
@@ -361,6 +363,7 @@ python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/da
 | `tools/chain.py` | the JSON-RPC client the three Flybook audits share: throttled batches, a cache of finalized logs, headers and receipts under `~/.cache/obrain`, Multicall3 for state reads; `--fresh` on any tool reads everything from the chain again |
 | `tools/vclone.py`, `tools/verify_clones.py` | the chain-exact twin of a Flybook brain (`Connectome.think` in Python, genome overlay and root fold included) and the audit that replays every brain's life from its genome and input words and diffs synapses, spikes, fired ids and root against the brain's own logs |
 | `tools/predict_next.py` | brings the twin to every brain's state at a block and registers what each would do at its next thought for 19 sensilla × 3 tiers and the pheromone (bucket, spikes, courtship count, cells outside the input layer, root), plus the cells waiting above threshold; `--check` regenerates and diffs |
+| `tools/verify_economy.py` | re-derives every fly's costs and income in OBRAIN and USDC (eclosion price, care, stud fees, nursery asks, ledger claims), every secondary sale with its USDC price, and the pool's price series from the Uniswap v4 swaps |
 | `research/` | field studies: report, figures, machine-readable data, verification logs |
 | `LICENSE`, `LICENSE-DATA` | the two licences: AGPL-3.0-only for code, CC BY-NC-SA 4.0 for derived data artifacts |
 | `foundry.toml` | build config (solc 0.8.28, via_ir, cancun) |

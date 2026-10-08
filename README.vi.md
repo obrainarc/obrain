@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--007-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--008-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#giấy-phép-và-trích-dẫn)
 
@@ -199,6 +199,7 @@ Lịch sử phát xạ của sinh vật tự nó là một kho ngữ liệu nghi
 | `research/2026-10-07-flybook-life-table/` | khối 23.713.176-24.657.020 (trạng thái ghim tại 24.657.020) | đợt sinh sản thứ hai và bảng sống: 51 con (51/51), quy luật mồi của tán tỉnh qua 82 phán quyết, thị trường đực giống, và đồng hồ của mọi con ruồi suy lại từ log của nó (384/384): nhà sáng lập ngủ đông, con cái vô sinh và hữu tử |
 | `research/2026-10-07-flybook-clone-twin/` | 366 bộ não, 4.331 ý nghĩ đến khối 24.657.020 | twin chính xác từng byte của não mọi hậu duệ (4.331/4.331 ý nghĩ tái lập đến root): residual tán tỉnh đọc bằng quanta, cơ chế bốn bước làm một tế bào ngoài lớp đầu vào phát xung, và 969 xung tiềm ẩn đang chờ trong 142 bộ não |
 | `research/2026-10-08-flybook-predictions/` | đăng ký tại khối 24.700.042 | dự đoán đăng ký trước: với mỗi não và mỗi trong 57 kích thích của người nuôi, số xung, số đếm vùng tán tỉnh và root sẽ ghi (22.335 dòng, băm trước khi bất kỳ dòng nào được kiểm), phán quyết của lần tán tỉnh kế tiếp của mọi nhà sáng lập, và 51 trong 1.032 điện tích đang chờ chưa bị decay lười bỏ rơi |
+| `research/2026-10-08-flybook-economy/` | khối 22.703.390-24.876.596 | quần thể như một thị trường: 76 triệu OBRAIN đã trả, 22 triệu kiếm được (93 % là phát hành khởi động, 2,6 % phí giống và đơn đặt), giá OBRAIN/USDC tại mọi sự kiện, 23 lần bán trên Seaport định giá theo số con chứ không theo tính trạng di truyền, và các kiểm tra on-chain cho thấy scheme exact của x402 (EIP-3009 trên USDC của Arc) có thể bán một ý nghĩ qua HTTP |
 
 ```bash
 python3 tools/verify_census.py        # quét lại chuỗi, so với bản điều tra
@@ -209,6 +210,7 @@ python3 tools/verify_generation1.py --check research/2026-10-07-flybook-life-tab
 python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table/data
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
+python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
 ```
 
 ---
@@ -232,6 +234,7 @@ python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/da
 | `tools/chain.py` | client JSON-RPC dùng chung của ba audit Flybook: batch có tiết lưu, cache log, header và receipt đã chung cuộc tại `~/.cache/obrain`, Multicall3 cho đọc trạng thái; `--fresh` ở tool nào cũng đọc lại toàn bộ từ chuỗi |
 | `tools/vclone.py`, `tools/verify_clones.py` | twin chính xác của một bộ não Flybook (`Connectome.think` bằng Python, gồm lớp phủ bộ gen và fold root) và audit tái chạy cả đời mỗi não từ bộ gen và từ đầu vào, đối chiếu synapse, xung, id tế bào và root với log của chính não đó |
 | `tools/predict_next.py` | đưa twin về trạng thái mỗi não tại một khối và đăng ký điều não sẽ làm ở ý nghĩ kế tiếp với 19 sensillum × 3 tier và pheromone (bucket, xung, số đếm tán tỉnh, tế bào ngoài lớp đầu vào, root), cùng các tế bào chờ trên ngưỡng; `--check` sinh lại và đối chiếu |
+| `tools/verify_economy.py` | suy lại chi phí và thu nhập mỗi con bằng OBRAIN và USDC (giá vũ hóa, chăm sóc, phí giống, đơn Nhà trẻ, claim từ sổ cái), mọi lần bán thứ cấp với giá USDC, và chuỗi giá pool từ các swap Uniswap v4 |
 | `research/` | nghiên cứu thực địa: báo cáo, hình, dữ liệu đọc máy, log kiểm chứng |
 | `LICENSE`, `LICENSE-DATA` | hai giấy phép: AGPL-3.0-only cho mã, CC BY-NC-SA 4.0 cho artifact dữ liệu phái sinh |
 | `foundry.toml` | cấu hình build (solc 0.8.28, via_ir, cancun) |
