@@ -14,10 +14,11 @@ report, figures, machine-readable data, verification artifacts, and
 | CS-006 | *Every descendant replayed: a chain-exact twin of the Flybook brains, the courtship residual at the membrane, and the latent spikes of 169,088 cells* | 366 brains, 4,331 thoughts to block 24,657,020 |
 | CS-007 | *Registered before the fact: what each of 386 brains does at its next thought, the ruling of every founder's next courtship, and which of 1,032 waiting charges can still fire* | registered at block 24,700,042, 2026-10-07 |
 | CS-008 | *The economy of the organism: what 390 brains earned, cost and sold for on Arc, and whether a thought can be bought over HTTP* | blocks 22,703,390-24,876,596, census 2026-10-08 |
+| CS-009 | *Thirteen days of a population dealt by consensus: the demography, mating system and inheritance of 397 Drosophila of the obrain connectome, and what a population biology on a public ledger is for* | blocks 22,703,390-25,009,800, census 2026-10-09 |
 
 CS-001 is published in English, Chinese (`.zh.md`), Japanese (`.ja.md`),
 Vietnamese (`.vi.md`) and Hindi (`.hi.md`) editions; data, figures and
-verification artifacts are shared between them. CS-002 to CS-008 are published in English.
+verification artifacts are shared between them. CS-002 to CS-009 are published in English.
 
 To re-audit a census against the living chain, from the repository root:
 
@@ -57,3 +58,11 @@ To regenerate CS-007's register of predictions at its block and diff it:
 To re-derive the population's accounts, sales and the OBRAIN price series (CS-008):
 
     python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
+
+To re-derive the whole record to CS-009's census block, score CS-007's register against it, and replay every thought (CS-009):
+
+    python3 tools/verify_generation1.py --check research/2026-10-09-flybook-thirteen-days/data
+    python3 tools/verify_lifetable.py --check research/2026-10-09-flybook-thirteen-days/data
+    python3 tools/verify_clones.py --check research/2026-10-09-flybook-thirteen-days/data
+    python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-09-flybook-thirteen-days/data --check research/2026-10-09-flybook-thirteen-days/data
+    python3 tools/hub_state.py --data research/2026-10-09-flybook-thirteen-days/data --check research/2026-10-09-flybook-thirteen-days/data

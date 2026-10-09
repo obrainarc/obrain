@@ -1,0 +1,7 @@
+register at block 24700042: 147 brains thought after it, 9 with a registered stimulus, 9/9 rows hit (spiked, out-of-layer cells and root)
+courtships at the target's registered tick: 9, rulings and counts hit 9/9
+waiting charges: 1032 (51 live); in brains that thought 661 (32 live, 0 of them visited); segment visited 30, cell fired 0
+register_score.csv: 147 rows, identical
+courtship_score.csv: 9 rows, identical
+waiting_score.csv: 661 rows, identical
+0 differences, 0 misses

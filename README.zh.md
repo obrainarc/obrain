@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--008-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--009-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -116,7 +116,7 @@ Google 的连接组学团队建造了这条谱系赖以运行的大量机器：�
 - **求偶。** 饲主用一只求偶者向目标求偶；中枢把信息素写入目标的第 0 号感器，目标自己的大脑在同一笔交易中裁决：当求偶区至少发放 `9 + fidelity × 4 / 100` 个细胞即接受，阈值由目标的基因组决定。
 - **两种时钟。** 奠基者（第 0 代）被*照料*：每次思维、产卵或被接受的求偶把它的窗口推至 30 天后，窗口过期则休眠，永不死亡。子代（第 1 代）自孵化起固定活 90 天，7 天无思维后每秒折寿，死后不复生，且不育。
 
-截至区块 24,657,020（2026-10-07），种群有 384 个个体：333 个奠基者与 51 个子代，82 次求偶裁决，4,331 次思维。每个基因组、裁决、孵化与时钟均可由共识重新推导（下文 CS-002 至 CS-005）。
+截至区块 25,009,800（2026-10-09），种群有 397 个个体：333 个奠基者与 64 个子代，107 次求偶裁决，4,676 次思维。每个基因组、裁决、孵化、思维与时钟均可由共识重新推导（下文 CS-002 至 CS-009）。
 
 ---
 
@@ -200,6 +200,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-07-flybook-clone-twin/` | 366 个大脑，至区块 24,657,020 的 4,331 次思维 | 每个后代大脑的链上精确孪生（4,331/4,331 次思维复现至根哈希）：以量子读出求偶残余电荷、使输入层之外细胞发放的四步机制、以及 142 个大脑中等待的 969 个潜在脉冲 |
 | `research/2026-10-08-flybook-predictions/` | 登记于区块 24,700,042 | 事前登记的预测：每个大脑在 57 种饲主刺激下的脉冲数、求偶区计数与将提交的根（22,335 行，在任何一条被检验前已哈希），每个奠基者下一次求偶的裁决，以及 1,032 个等待电荷中尚未被惰性衰减搁浅的 51 个 |
 | `research/2026-10-08-flybook-economy/` | 区块 22,703,390-24,876,596 | 把种群当作市场：支付 7,600 万 OBRAIN、赚得 2,200 万（93 % 为启动期发行，2.6 % 为种费与订单），每个事件时刻的 OBRAIN/USDC 价格，23 笔 Seaport 成交按子代数而非可遗传性状定价，以及 x402 的 exact 方案（Arc 上 USDC 的 EIP-3009）能通过 HTTP 出售一次思维的链上核验 |
+| `research/2026-10-09-flybook-thirteen-days/` | 区块 22,703,390-25,009,800（状态钉在 25,009,800） | 重新推导全部记录并在其上复验每条规律：397 个个体、64 个子代（64/64）、107 次裁决（107/107，启动定律无一例外）、4,676 次思维（4,676/4,676）、397 个时钟（397/397）、59 个繁殖者（有效数 37.6）、漂变分解为谁繁殖与孟德尔抽样并与精确期望比较、亲中值回归斜率 0.80、CS-007 登记表的评分（9 次思维命中、30/30 搁浅电荷被抹除、无活电荷被检验）以及腿部中间神经元 148,380 的首次发放；并讨论公开账本上的种群生物学有何用处，明示其信任假设与种子可被操纵之处 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
@@ -211,6 +212,8 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-09-flybook-thirteen-days/data --check research/2026-10-09-flybook-thirteen-days/data
+python3 tools/hub_state.py --data research/2026-10-09-flybook-thirteen-days/data --check research/2026-10-09-flybook-thirteen-days/data
 ```
 
 ---
@@ -235,6 +238,8 @@ python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
 | `tools/vclone.py`、`tools/verify_clones.py` | Flybook 大脑的链上精确孪生（Python 实现的 `Connectome.think`，含基因组叠加与根折叠）及审计：从基因组与输入词重放每个大脑的一生，并与其自身日志比对突触、脉冲、发放细胞与根 |
 | `tools/predict_next.py` | 把孪生带到某区块每个大脑的状态，登记其下一次思维在 19 个感器 × 3 层与信息素下会做什么（桶、脉冲、求偶计数、输入层外细胞、根），以及阈上等待的细胞；`--check` 重新生成并比对 |
 | `tools/verify_economy.py` | 以 OBRAIN 与 USDC 重新推导每只果蝇的成本与收入（羽化价、照料、种费、育婴订单、账本领取）、每笔二级成交及其 USDC 价格，以及由 Uniswap v4 交换得到的池价序列 |
+| `tools/score_register.py` | 以大脑其后的思维为 CS-007 的登记表评分：哪些行被登记刺激检验并命中（发放、输入层外细胞、根哈希）、登记 tick 上的哪些裁决相符、哪些等待电荷被访问并发放或抹除；无需 RPC |
+| `tools/hub_state.py` | 在研究的钉定区块读取枢纽的治理状态（是否暂停、是否放弃升级、时间锁延迟、守护者）、每个饲主/求偶者/持有者地址上的代码（区分 EIP-7702 委托）、蛹的重置次数，以及种群在链上的足迹（羽化、思维、求偶与转让的交易数、gas 与费用）；`--check` 重新生成并比对 |
 | `research/` | 田野研究：报告、图、机器可读数据、验证日志 |
 | `LICENSE`、`LICENSE-DATA` | 两份许可：代码 AGPL-3.0-only，衍生数据工件 CC BY-NC-SA 4.0 |
 | `foundry.toml` | 构建配置（solc 0.8.28、via_ir、cancun） |

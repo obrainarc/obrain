@@ -1,0 +1,10 @@
+block,target,suitor,outcome,target_tick,tick_before,predicted_count,observed_fired,selectivity,predicted_ruling,hit
+24731510,215,175,accepted,22,21,15,15,10,accepted,1
+24759912,285,38,rejected,67,66,10,10,11,rejected,1
+24760324,181,47,rejected,9,8,10,10,11,rejected,1
+24760392,12,38,rejected,13,12,10,10,11,rejected,1
+24764268,177,51,rejected,9,8,5,5,10,rejected,1
+24776959,294,141,accepted,8,7,10,10,10,accepted,1
+24782054,92,304,accepted,8,7,15,15,10,accepted,1
+24787142,117,140,rejected,4,3,5,5,11,rejected,1
+24878027,172,163,accepted,14,13,10,10,10,accepted,1

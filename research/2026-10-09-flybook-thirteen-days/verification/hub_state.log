@@ -1,0 +1,16 @@
+193 addresses, 49 hold code at block 25009800 (48 EIP-7702 delegations, 1 deployed contracts)
+block 25009800
+paused False
+upgradesRenounced False
+timelock 0x52533111a4419295d8c5ce5801276946b47bfe1d code_bytes 5448 minDelay_seconds 172800
+guardian 0xf9727f05c3ee11b630a5fab9573bd24e9c47d1d8 code_bytes 0
+PupaRearmed_logs 19 pupae_rearmed 15
+rearms_by_pupa 3:1 6:2 7:1 8:1 13:1 19:1 28:2 29:1 30:1 33:1 34:1 35:2 36:2 37:1 39:1
+Eclosed: 397 logs in 397 transactions, 288,417,874 gas, 5.9968 native units in fees
+Thought: 4676 logs in 4667 transactions, 27,412,462,345 gas, 565.6624 native units in fees
+Courted: 107 logs in 107 transactions, 637,791,201 gas, 13.4004 native units in fees
+Transfer: 466 logs in 459 transactions, 305,300,224 gas, 6.3454 native units in fees
+total_unique: 5646 logs in 5126 transactions, 27,717,762,569 gas, 572.0078 native units in fees
+addresses.csv: 193 rows, identical
+hub_state.txt: identical
+footprint.csv: 5 rows, identical

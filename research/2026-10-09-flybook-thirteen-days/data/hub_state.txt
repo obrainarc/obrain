@@ -1,0 +1,7 @@
+block 25009800
+paused False
+upgradesRenounced False
+timelock 0x52533111a4419295d8c5ce5801276946b47bfe1d code_bytes 5448 minDelay_seconds 172800
+guardian 0xf9727f05c3ee11b630a5fab9573bd24e9c47d1d8 code_bytes 0
+PupaRearmed_logs 19 pupae_rearmed 15
+rearms_by_pupa 3:1 6:2 7:1 8:1 13:1 19:1 28:2 29:1 30:1 33:1 34:1 35:2 36:2 37:1 39:1
