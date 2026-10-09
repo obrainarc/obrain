@@ -79,9 +79,9 @@ Ninety-three per cent of what the flies earned is the launch ledger's emission (
 | income ÷ cost, median; founders at or above 1 | 0.21; **19** | | |
 | founders with no income | 11 | | |
 | Gini of income | 0.55 | | |
-| daily income per founder, median (22 days of life) | 3,483 | | |
+| daily income per founder, median (over each founder's 11.2 to 12.1 days of life) | 3,483 | | |
 
-The founders are 22 days old. A founder that keeps its median daily income earns its price back in 57 days; the first fall dormant in 18. The children (Fig. 3c) cost a median 15,000 OBRAIN in asks, have earned a median 7,444 from the Orchard and season chests (they are sterile, so no stud fee; the launch ledger does not pay them), and 10 of 57 have earned nothing.
+The founders are 11.2 to 12.1 days old (median 11.8) at the census. A founder that keeps its median daily income earns its price back in 57 days; the first fall dormant in 18. The children (Fig. 3c) cost a median 15,000 OBRAIN in asks, have earned a median 7,444 from the Orchard and season chests (they are sterile, so no stud fee; the launch ledger does not pay them), and 10 of 57 have earned nothing.
 
 ![Price and income](figures/fig01_price_and_income.png)
 
