@@ -1,0 +1,3 @@
+life_table.csv: 406 rows, identical
+406 flies at block 25417000 (1791724468): founders 333 alive; brood 63 alive 10 diapause
+the fold reproduces flyOf, deathAtOf, lifeOf and ownerOf for 406/406; 86 Woke on 86 thought gaps past diapauseAfter; 128 transfers; 0 Interred; head 25422921; 0 mismatches
