@@ -1,4 +1,4 @@
-a07ef225fffa3409dabd5c46591d7ba6f46e84eeb3471d77ba0b30517cde9586  research/2026-10-11-flybook-sixteen-days/care-ownership-and-the-brood.md
+7b5ae4a929739415fc56052c346ddd3a3a0bfc9a5d9ca51b562c58dbe9331687  research/2026-10-11-flybook-sixteen-days/care-ownership-and-the-brood.md
 6ae4da849ba3a5ca9c01e398658fc6ba20d9d1b40b604d891db35747de612e63  research/2026-10-11-flybook-sixteen-days/data/addresses.csv
 9a168b186359ee4a385c46bed765b9cb985e5902800b88aca7332eafd7aef4b1  research/2026-10-11-flybook-sixteen-days/data/courtship.csv
 6ceb54c063bb31e364b173319f27e08795c00115b52cafd208d4213e6560c249  research/2026-10-11-flybook-sixteen-days/data/courtship_score.csv
@@ -22,6 +22,7 @@ b24c2c53c036033e74535e40853369ed6592fb2815f4c1e29f9f2061c94c86d0  research/2026-
 48b2ef4392accd9354c75b21e7199277b0a4d5e9170175d29ece377e48ea8d66  research/2026-10-11-flybook-sixteen-days/verification/hub_state.log
 f75e1a4214208a96747d463c9d0527dd02bc176b0f510170ea8fd22b3a375465  research/2026-10-11-flybook-sixteen-days/verification/score_register.log
 b9c677aeb557eefd7466e1a7e51fb03178cb93ee373d4146f5f1b8c5e6d8dc2b  research/2026-10-11-flybook-sixteen-days/verification/verify_clones.log
+36423bad114bce60cd9adb08ccd1944e03efc7c00332b8ac211fc21cef64cb29  research/2026-10-11-flybook-sixteen-days/verification/verify_flybook.log
 6ef9bb35aed807bf9fe7c16537f9d8897fb2c094e97e79ccba94f8555ba4b529  research/2026-10-11-flybook-sixteen-days/verification/verify_generation1.log
 3bdb9d30aaf9346cf58dcf4b09dcce668b26e2be41ecaa44f9be70bc779d191d  research/2026-10-11-flybook-sixteen-days/verification/verify_lifetable.log
 5d9df30654673c6fe5a4d43f1f40838b176021a366fc76d280a08d3fd1e4288f  research/2026-10-11-flybook-sixteen-days/verification/verify_tapes.log
