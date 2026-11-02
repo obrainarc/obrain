@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.zh.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--010-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--011-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#许可与引用)
 
@@ -116,7 +116,7 @@ Google 的连接组学团队建造了这条谱系赖以运行的大量机器：�
 - **求偶。** 饲主用一只求偶者向目标求偶；中枢把信息素写入目标的第 0 号感器，目标自己的大脑在同一笔交易中裁决：当求偶区至少发放 `9 + fidelity × 4 / 100` 个细胞即接受，阈值由目标的基因组决定。
 - **两种时钟。** 奠基者（第 0 代）被*照料*：每次思维、产卵或被接受的求偶把它的窗口推至 30 天后，窗口过期则休眠，永不死亡。子代（第 1 代）自孵化起固定活 90 天，7 天无思维后每秒折寿，死后不复生，且不育。
 
-截至区块 25,417,000（2026-10-11），种群有 406 个个体：333 个奠基者与 73 个子代，118 次求偶裁决，4,846 次思维。每个基因组、裁决、孵化、思维与时钟均可由共识重新推导（下文 CS-002 至 CS-010）。
+截至区块 29,099,000（2026-11-02），种群有 418 个个体：333 个奠基者与 85 个子代，137 次求偶裁决，5,404 次思维；168 个奠基者休眠，66 个子代滞育。每个基因组、裁决、孵化、思维与时钟均可由共识重新推导（下文 CS-002 至 CS-011）。
 
 ---
 
@@ -202,6 +202,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-08-flybook-economy/` | 区块 22,703,390-24,876,596 | 把种群当作市场：支付 7,600 万 OBRAIN、赚得 2,200 万（93 % 为启动期发行，2.6 % 为种费与订单），每个事件时刻的 OBRAIN/USDC 价格，23 笔 Seaport 成交按子代数而非可遗传性状定价，以及 x402 的 exact 方案（Arc 上 USDC 的 EIP-3009）能通过 HTTP 出售一次思维的链上核验 |
 | `research/2026-10-09-flybook-thirteen-days/` | 区块 22,703,390-25,009,800（状态钉在 25,009,800） | 重新推导全部记录并在其上复验每条规律：397 个个体、64 个子代（64/64）、107 次裁决（107/107，启动定律无一例外）、4,676 次思维（4,676/4,676）、397 个时钟（397/397）、59 个繁殖者（有效数 37.6）、漂变分解为谁繁殖与孟德尔抽样并与精确期望比较、亲中值回归斜率 0.80、CS-007 登记表的评分（9 次思维命中、30/30 搁浅电荷被抹除、无活电荷被检验）以及腿部中间神经元 148,380 的首次发放；并讨论公开账本上的种群生物学有何用处，明示其信任假设与种子可被操纵之处 |
 | `research/2026-10-11-flybook-sixteen-days/` | 区块 22,703,390-25,417,000（状态钉在 25,417,000；所有检验在 25,009,800 之后的区间上进行） | CS-009 的规律在其普查后 2.39 天的样本外检验：11 次裁决（11/11）、11 次启动（5/5 对 0/6）、9 个子代（9/9；斜率 0.84）、170 次思维（170/170），无一主张失败；照料方式已定型为 2,500 OBRAIN 的远征，59 % 给了子代，子代要么每日照料要么完全弃置（滞育 7 → 10）；59 次转让，其中 30 次转入一个包装合约，它现持有 67 只、每次存入铸造一枚可交易代币、从未刺激过任何一只；170 次思维中 12 次在输入层外发放，其中一次发生在裁决之中 |
+| `research/2026-11-02-flybook-three-weeks/` | 区块 22,703,390-29,099,000（状态钉在 29,099,000；所有检验在 25,417,000 之后的区间上进行） | 三周样本外：19 次裁决（19/19）、12 个子代（12/12）、7 次蛹选（7/7）、558 次思维（558/558）、418 个时钟（418/418），无一恒等式失效；奠基者的第一个窗口自 10 月 26 日起关闭，333 个中 168 个休眠，全是 10 月 2 日后未再被思维的奠基者，其主人在区间内只付了 1 次思维；85 个子代中 66 个滞育，存活的 19 个由 8 位主人照料，首批死亡时刻在 11 月 17 日；思维降至每天 25.8 次，55 % 由三位饲主支付；封装合约持有 73 只，仍从未照料；558 次思维中 19 次在输入层外放电 |
 
 ```bash
 python3 tools/verify_census.py        # 重扫链，与普查比对
@@ -213,9 +214,9 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
-python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
 ```
 
 ---

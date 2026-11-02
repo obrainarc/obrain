@@ -1,0 +1,4 @@
+7 deposits into 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 in blocks 25417001-29099000: 7 minted one token to the depositor in the same transaction; the contract emitted 68 Transfer logs (24 mints, 44 moves of 32 tokens to 8 addresses, 0 burns); 5 depositors
+wrapper_deposits.csv: 7 rows, identical
+wrapper_tokens.csv: 68 rows, identical
+0 mismatches

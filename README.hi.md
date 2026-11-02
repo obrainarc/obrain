@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--010-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--011-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#लाइसेंस-और-उद्धरण)
 
@@ -116,7 +116,7 @@ Google की कनेक्टोमिक्स टीम ने इस व�
 - **प्रणय।** पालक एक नर से लक्ष्य को रिझाता है; हब फेरोमोन लक्ष्य के संवेदिका 0 में लिखता है और लक्ष्य का अपना मस्तिष्क उसी लेनदेन में निर्णय देता है: स्वीकार तभी जब प्रणय-क्षेत्र कम से कम `9 + fidelity × 4 / 100` कोशिकाएँ दागे, जिसकी सीमा लक्ष्य का जीनोम तय करता है।
 - **दो घड़ियाँ।** संस्थापक (पीढ़ी 0) *सँभाला* जाता है: हर विचार, अंडा या स्वीकृत प्रणय उसकी खिड़की 30 दिन आगे धकेलता है, और बीती खिड़की उसे सुप्त करती है, मृत कभी नहीं। संतान (पीढ़ी 1) निकलने से नियत 90 दिन जीती है, बिना विचार 7 दिन बीतने पर हर सेकंड जीवन खोती है, सदा के लिए मरती है, और बाँझ है।
 
-ब्लॉक 25,417,000 (2026-10-11) पर जनसंख्या में 406 व्यक्ति थे, 333 संस्थापक और 73 संतानें, 118 प्रणय-निर्णय और 4,846 विचार। हर जीनोम, निर्णय, अंडोत्सर्ग और घड़ी सहमति से पुनः निकलती है (नीचे CS-002 से CS-005)।
+ब्लॉक 29,099,000 (2026-11-02) पर जनसंख्या में 418 व्यक्ति थे, 333 संस्थापक और 85 संतानें, 137 प्रणय-निर्णय और 5,404 विचार; 168 संस्थापक सुप्त और 66 संतानें डायपॉज़ में। हर जीनोम, निर्णय, अंडोत्सर्ग और घड़ी सहमति से पुनः निकलती है (नीचे CS-002 से CS-005)।
 
 ---
 
@@ -202,6 +202,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-08-flybook-economy/` | ब्लॉक 22,703,390-24,876,596 | जनसंख्या एक बाज़ार के रूप में: 7.6 करोड़ OBRAIN चुकाए, 2.2 करोड़ कमाए (93 % लॉन्च उत्सर्जन, 2.6 % प्रजनन शुल्क और माँग), हर घटना पर OBRAIN/USDC मूल्य, Seaport की 23 बिक्रियाँ जिनका दाम वंशागत गुणों से नहीं बल्कि संतानों की संख्या से तय हुआ, और ऑनचेन जाँचें कि x402 की exact योजना (Arc के USDC पर EIP-3009) HTTP पर एक विचार बेच सकती है |
 | `research/2026-10-09-flybook-thirteen-days/` | ब्लॉक 22,703,390-25,009,800 (स्थिति 25,009,800 पर स्थिर) | पूरा अभिलेख पुनः निकाला और हर नियम उस पर पुनः परखा: 397 व्यक्ति, 64 संतानें (64/64), 107 निर्णय (107/107, प्राइमिंग नियम बिना अपवाद), 4,676 विचार (4,676/4,676), 397 घड़ियाँ (397/397), 59 प्रजनक (प्रभावी संख्या 37.6), विचलन का विभाजन किसने प्रजनन किया और मेंडेलीय प्रतिचयन में, सटीक अपेक्षाओं के विरुद्ध, मध्य-जनक ढाल 0.80, CS-007 की पंजी का मूल्यांकन (9 विचार सही, 30/30 फँसे आवेश मिटे, कोई जीवित आवेश परखा नहीं गया) और टाँग-अंतर्न्यूरॉन 148,380 का पहला स्पाइक; सार्वजनिक बही पर जनसंख्या-जीवविज्ञान किस काम का है, इस पर चर्चा, जिसमें विश्वास की मान्यताएँ और बीज की हेरफेर-योग्यता स्पष्ट की गई है |
 | `research/2026-10-11-flybook-sixteen-days/` | ब्लॉक 22,703,390-25,417,000 (स्थिति 25,417,000 पर स्थिर; हर परीक्षण 25,009,800 के बाद के अंतराल पर) | CS-009 के नियम उसकी जनगणना के बाद के 2.39 दिनों पर नमूने से बाहर परखे: 11 निर्णय (11/11), 11 प्राइमिंग (5/5 बनाम 0/6), 9 संतानें (9/9; ढाल 0.84), 170 विचार (170/170), कोई दावा विफल नहीं; देखभाल 2,500 OBRAIN के अभियान पर स्थिर, 59 % संतानों को, जिन्हें रोज़ सँभाला जाता है या बिल्कुल नहीं (डायपॉज़ 7 → 10); 59 हस्तांतरण, 30 एक रैपर अनुबंध में, जो अब 67 मक्खियाँ रखता है, हर जमा पर एक व्यापार-योग्य टोकन ढालता है और किसी को कभी उद्दीपित नहीं किया; 170 में 12 विचारों ने इनपुट-परत से बाहर की कोशिका को दागा, एक बार निर्णय के भीतर |
+| `research/2026-11-02-flybook-three-weeks/` | ब्लॉक 22,703,390-29,099,000 (स्थिति 29,099,000 पर स्थिर; हर परीक्षण 25,417,000 के बाद के अंतराल पर) | तीन सप्ताह नमूने से बाहर: 19 निर्णय (19/19), 12 संतानें (12/12), 7 प्यूपा चयन (7/7), 558 विचार (558/558), 418 घड़ियाँ (418/418), कोई सर्वसमिका विफल नहीं; संस्थापकों की पहली खिड़की 26 अक्टूबर से बंद हुई और 333 में से 168 सुप्त हैं, सभी 2 अक्टूबर के बाद बिना विचार के, जिनके स्वामियों ने अंतराल में केवल 1 विचार चुकाया; 85 में से 66 संतानें डायपॉज़ में, जीवित 19 को 8 स्वामी पालते हैं, पहली मृत्यु-घड़ी 17 नवंबर; विचार घटकर 25.8 प्रति दिन, 55 % तीन रखवालों द्वारा; रैपर 73 मक्खियों का स्वामी है और अब भी किसी की देखभाल नहीं करता; 558 में से 19 विचार इनपुट परत के बाहर फायर |
 
 ```bash
 python3 tools/verify_census.py        # शृंखला पुनः स्कैन करें, जनगणना से तुलना करें
@@ -213,9 +214,9 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
-python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
 ```
 
 ---

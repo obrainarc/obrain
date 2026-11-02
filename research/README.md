@@ -16,10 +16,11 @@ report, figures, machine-readable data, verification artifacts, and
 | CS-008 | *The economy of the organism: what 390 brains earned, cost and sold for on Arc, and whether a thought can be bought over HTTP* | blocks 22,703,390-24,876,596, census 2026-10-08 |
 | CS-009 | *Thirteen days of a population dealt by consensus: the demography, mating system and inheritance of 397 Drosophila of the obrain connectome, and what a population biology on a public ledger is for* | blocks 22,703,390-25,009,800, census 2026-10-09 |
 | CS-010 | *Two days out of sample: the laws of CS-009 tested on data that did not exist when it was written, a brood tended or abandoned, ownership moving into a wrapper contract, and second-order spikes at one thought in fourteen* | blocks 22,703,390-25,417,000 (tests on the interval after 25,009,800), census 2026-10-11 |
+| CS-011 | *The first window closes: three weeks out of sample, the dormancy of half the founders, a brood kept by eight owners, and a record that keeps every identity it was given* | blocks 22,703,390-29,099,000 (tests on the interval after 25,417,000), census 2026-11-02 |
 
 CS-001 is published in English, Chinese (`.zh.md`), Japanese (`.ja.md`),
 Vietnamese (`.vi.md`) and Hindi (`.hi.md`) editions; data, figures and
-verification artifacts are shared between them. CS-002 to CS-010 are published in English.
+verification artifacts are shared between them. CS-002 to CS-011 are published in English.
 
 To re-audit a census against the living chain, from the repository root:
 
@@ -68,3 +69,12 @@ To re-derive the whole record to CS-010's census block, score CS-007's register 
     python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
     python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
     python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+
+To re-derive the whole record to CS-011's census block and score CS-007's register against it (CS-011):
+
+    python3 tools/verify_generation1.py --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
+    python3 tools/verify_lifetable.py --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
+    python3 tools/verify_clones.py --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
+    python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+    python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+    python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data

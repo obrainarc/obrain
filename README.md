@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--010-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--011-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#licensing-and-citation)
 
@@ -226,10 +226,10 @@ The rules are code, and the field studies audit them against the chain:
   hatch, loses life for every second past 7 days without a thought, dies for
   good, and is sterile.
 
-At block 25,417,000 (2026-10-11) the population held 406 individuals, 333
-founders and 73 children, with 118 courtships ruled and 4,846 thoughts. Every
-genome, ruling, hatch, thought and clock re-derives from consensus (CS-002 to
-CS-010 below).
+At block 29,099,000 (2026-11-02) the population held 418 individuals, 333
+founders and 85 children, with 137 courtships ruled and 5,404 thoughts; 168
+founders are dormant and 66 children in diapause. Every genome, ruling, hatch,
+thought and clock re-derives from consensus (CS-002 to CS-011 below).
 
 ---
 
@@ -331,6 +331,7 @@ consensus.
 | `research/2026-10-08-flybook-economy/` | blocks 22,703,390-24,876,596 | the population as a market: 76 M OBRAIN paid, 22 M earned (93 % launch emission, 2.6 % stud fees and asks), the OBRAIN/USDC price at every event, 23 Seaport sales priced by children rather than by heritable traits, and the on-chain checks that x402's exact scheme (EIP-3009 on Arc's USDC) can sell a thought over HTTP |
 | `research/2026-10-09-flybook-thirteen-days/` | blocks 22,703,390-25,009,800 (state pinned at 25,009,800) | the whole record re-derived and every law re-tested on it: 397 individuals, 64 children (64/64), 107 rulings (107/107, the priming law without exception), 4,676 thoughts (4,676/4,676), 397 clocks (397/397), 59 breeders (effective number 37.6), drift decomposed into who bred and Mendelian sampling against exact expectations, a mid-parent slope of 0.80, CS-007's register scored (9 thoughts hit, 30/30 stranded charges erased, no live charge tested) and the first spikes of the leg interneuron 148,380; a discussion of what a population biology on a public ledger is for, with its trust assumptions and the grindability of its seeds stated |
 | `research/2026-10-11-flybook-sixteen-days/` | blocks 22,703,390-25,417,000 (state pinned at 25,417,000; every test on the interval after 25,009,800) | CS-009's laws tested out of sample on the 2.39 days after its census: 11 rulings (11/11), 11 primings (5/5 against 0/6), 9 children (9/9; slope 0.84), 170 thoughts (170/170), no claim failed; a care regime settled on the 2,500-OBRAIN expedition, 59 % of it to the brood, which is tended daily or not at all (diapause 7 → 10); 59 transfers, 30 of them into a wrapper contract that now owns 67 flies, mints a tradable token per deposit and has never stimulated one; 12 of 170 thoughts firing a cell outside the input layer, once inside a ruling |
+| `research/2026-11-02-flybook-three-weeks/` | blocks 22,703,390-29,099,000 (state pinned at 29,099,000; every test on the interval after 25,417,000) | three weeks out of sample: 19 rulings (19/19), 12 children (12/12), 7 pupa picks (7/7), 558 thoughts (558/558), 418 clocks (418/418), no identity failed; the founders' first window closed from 26 October and 168 of 333 are dormant, every one a founder last thought by 2 October whose owners paid for 1 thought in the interval; 66 of 85 brood in diapause, the 19 alive kept by 8 owners, the first death moments on 17 November; thoughts down to 25.8 a day, 55 % paid by three keepers; the wrapper owns 73 flies and still tends none; 19 of 558 thoughts firing outside the input layer |
 
 ```bash
 python3 tools/verify_census.py        # re-scan the chain, diff against the census
@@ -342,9 +343,9 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
-python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
 ```
 
 ---

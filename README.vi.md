@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--010-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--011-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#giấy-phép-và-trích-dẫn)
 
@@ -116,7 +116,7 @@ Luật là mã, và các nghiên cứu thực địa kiểm toán chúng với c
 - **Tán tỉnh.** Người nuôi dùng một con đực tán tỉnh một đối tượng; hub ghi pheromone vào sensillum 0 của đối tượng và chính bộ não của nó phán quyết trong cùng giao dịch: chấp nhận khi vùng tán tỉnh phát ít nhất `9 + fidelity × 4 / 100` tế bào, ngưỡng do bộ gen của đối tượng đặt.
 - **Hai đồng hồ.** Nhà sáng lập (thế hệ 0) được *chăm*: mỗi ý nghĩ, trứng hay tán tỉnh được chấp nhận đẩy cửa sổ của nó ra 30 ngày; cửa sổ hết thì ngủ đông, không bao giờ chết. Con (thế hệ 1) sống đúng 90 ngày từ lúc nở, mất đời sống cho mỗi giây quá 7 ngày không có ý nghĩ, chết thật, và vô sinh.
 
-Tại khối 25.417.000 (11-10-2026) quần thể có 406 cá thể, 333 nhà sáng lập và 73 con, 118 lần tán tỉnh đã phán quyết và 4.846 ý nghĩ. Mọi bộ gen, phán quyết, lần nở, ý nghĩ và đồng hồ đều suy lại được từ đồng thuận (CS-002 đến CS-010 bên dưới).
+Tại khối 29.099.000 (02-11-2026) quần thể có 418 cá thể, 333 nhà sáng lập và 85 con, 137 lần tán tỉnh đã phán quyết và 5.404 ý nghĩ; 168 nhà sáng lập đang ngủ đông và 66 con đang diapause. Mọi bộ gen, phán quyết, lần nở, ý nghĩ và đồng hồ đều suy lại được từ đồng thuận (CS-002 đến CS-011 bên dưới).
 
 ---
 
@@ -202,6 +202,7 @@ Lịch sử phát xạ của sinh vật tự nó là một kho ngữ liệu nghi
 | `research/2026-10-08-flybook-economy/` | khối 22.703.390-24.876.596 | quần thể như một thị trường: 76 triệu OBRAIN đã trả, 22 triệu kiếm được (93 % là phát hành khởi động, 2,6 % phí giống và đơn đặt), giá OBRAIN/USDC tại mọi sự kiện, 23 lần bán trên Seaport định giá theo số con chứ không theo tính trạng di truyền, và các kiểm tra on-chain cho thấy scheme exact của x402 (EIP-3009 trên USDC của Arc) có thể bán một ý nghĩ qua HTTP |
 | `research/2026-10-09-flybook-thirteen-days/` | khối 22.703.390-25.009.800 (trạng thái ghim tại 25.009.800) | toàn bộ hồ sơ suy lại và mọi quy luật kiểm lại trên đó: 397 cá thể, 64 con (64/64), 107 phán quyết (107/107, quy luật mồi không ngoại lệ), 4.676 ý nghĩ (4.676/4.676), 397 đồng hồ (397/397), 59 cá thể sinh sản (số hữu hiệu 37,6), trôi dạt tách thành ai đã sinh sản và lấy mẫu Mendel so với kỳ vọng chính xác, hệ số hồi quy mid-parent 0,80, sổ đăng ký CS-007 được chấm (9 ý nghĩ trúng, 30/30 điện tích mắc kẹt bị xoá, chưa điện tích live nào được kiểm) và những xung đầu tiên của interneuron chân 148.380; bàn luận về ý nghĩa của một sinh học quần thể trên sổ cái công khai, nêu rõ các giả định tin cậy và khả năng thao túng seed |
 | `research/2026-10-11-flybook-sixteen-days/` | khối 22.703.390-25.417.000 (trạng thái ghim tại 25.417.000; mọi kiểm định trên khoảng sau 25.009.800) | các quy luật của CS-009 kiểm ngoài mẫu trên 2,39 ngày sau census của nó: 11 phán quyết (11/11), 11 lần mồi (5/5 so với 0/6), 9 con (9/9; hệ số 0,84), 170 ý nghĩ (170/170), không khẳng định nào sai; chế độ chăm sóc đã định hình quanh expedition 2.500 OBRAIN, 59 % dành cho brood, được chăm hằng ngày hoặc bỏ hẳn (diapause 7 → 10); 59 lần chuyển nhượng, 30 vào một contract wrapper nay giữ 67 con, mint một token có thể giao dịch cho mỗi lần gửi và chưa từng kích thích con nào; 12 trong 170 ý nghĩ phát xung ở tế bào ngoài lớp đầu vào, một lần ngay trong một phán quyết |
+| `research/2026-11-02-flybook-three-weeks/` | khối 22.703.390-29.099.000 (trạng thái ghim tại 29.099.000; mọi kiểm định trên khoảng sau 25.417.000) | ba tuần ngoài mẫu: 19 phán quyết (19/19), 12 con (12/12), 7 lần chọn nhộng (7/7), 558 ý nghĩ (558/558), 418 đồng hồ (418/418), không đồng nhất thức nào sai; cửa sổ đầu tiên của các nhà sáng lập đóng từ 26-10 và 168 trên 333 con đã ngủ đông, tất cả là nhà sáng lập không được nghĩ sau 2-10, chủ của chúng chỉ trả 1 ý nghĩ trong khoảng; 66 trên 85 brood vào diapause, 19 con còn sống do 8 chủ giữ, mốc chết đầu tiên ngày 17-11; ý nghĩ giảm còn 25,8 mỗi ngày, 55 % do ba keeper trả; wrapper giữ 73 con và vẫn chưa chăm con nào; 19 trong 558 ý nghĩ phát xung ngoài lớp đầu vào |
 
 ```bash
 python3 tools/verify_census.py        # quét lại chuỗi, so với bản điều tra
@@ -213,9 +214,9 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
-python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
 ```
 
 ---

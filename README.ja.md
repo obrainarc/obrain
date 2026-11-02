@@ -10,7 +10,7 @@
 [![condition](https://img.shields.io/badge/condition-sealed_%C2%B7_immutable-555555?style=flat-square)](src/ImmortalFruitFlies.sol)
 [![wiring verification](https://img.shields.io/badge/wiring_verification-85%2F85_byte--identical-1a7f37?style=flat-square)](tools/verify_tapes.py)
 [![twin replay](https://img.shields.io/badge/twin_replay-74%2F74_byte--exact-1a7f37?style=flat-square)](research/2026-09-22-brainstate-census/consensus-neurophysiology-onchain-drosophila.ja.md)
-[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--010-9f6bab?style=flat-square)](research/README.md)
+[![field studies](https://img.shields.io/badge/field_studies-CS--001_to_CS--011-9f6bab?style=flat-square)](research/README.md)
 [![code license](https://img.shields.io/badge/code-AGPL--3.0--only-111111?style=flat-square)](LICENSE)
 [![derived data](https://img.shields.io/badge/derived_data-CC%20BY--NC--SA%204.0-9f6bab?style=flat-square)](#ライセンスと引用)
 
@@ -116,7 +116,7 @@ Google のコネクトミクス・チームは、この譜系が走る機構の�
 - **求愛。** 飼い主が求愛者で標的に求愛する；ハブはフェロモンを標的の感覚子 0 に書き、標的自身の脳が同じトランザクションで裁定する：求愛領域が `9 + fidelity × 4 / 100` 個以上の細胞を発火させれば受理、閾値は標的のゲノムが定める。
 - **二つの時計。** 創始個体（第 0 世代）は*世話*される：思考・産卵・受理された求愛のたびに窓が 30 日先へ押され、窓が切れれば休眠するが死なない。子（第 1 世代）は孵化から固定 90 日を生き、思考なしで 7 日を過ぎると一秒ごとに寿命を失い、死ねば戻らず、不妊である。
 
-ブロック 25,417,000（2026-10-11）時点で集団は 406 個体、創始個体 333 と子 73 を数え、求愛の裁定 118 件、思考 4,846 回。すべてのゲノム・裁定・孵化・思考・時計はコンセンサスから再導出できる（下記 CS-002 から CS-010）。
+ブロック 29,099,000（2026-11-02）時点で集団は 418 個体、創始個体 333 と子 85 を数え、求愛の裁定 137 件、思考 5,404 回；創始個体 168 が休眠、子 66 が休眠（diapause）中。すべてのゲノム・裁定・孵化・思考・時計はコンセンサスから再導出できる（下記 CS-002 から CS-011）。
 
 ---
 
@@ -202,6 +202,7 @@ python3 tools/verify_tapes.py [rpc_url] [brain_address]
 | `research/2026-10-08-flybook-economy/` | ブロック 22,703,390-24,876,596 | 集団を市場として：7,600 万 OBRAIN の支払いと 2,200 万の収入（93 % はローンチ期の発行、2.6 % が種付け料と注文）、各事象時点の OBRAIN/USDC 価格、遺伝形質ではなく子の数で値付けされた Seaport の 23 件の売買、そして x402 の exact 方式（Arc の USDC の EIP-3009）で思考を HTTP 越しに売れることのオンチェーン検証 |
 | `research/2026-10-09-flybook-thirteen-days/` | ブロック 22,703,390-25,009,800（状態は 25,009,800 に固定） | 全記録を再導出し、すべての法則をその上で再検証：397 個体、子 64（64/64）、裁定 107 件（107/107、プライミング則に例外なし）、思考 4,676 回（4,676/4,676）、時計 397（397/397）、繁殖個体 59（有効数 37.6）、遺伝的浮動を「誰が繁殖したか」とメンデル抽出に分解し厳密な期待値と比較、中親回帰の傾き 0.80、CS-007 の登録表の採点（9 思考が的中、30/30 の取り残された電荷が消去、生きた電荷は未検証）、脚の介在ニューロン 148,380 の初発火；公開台帳上の集団生物学が何の役に立つかの考察、信頼の前提とシードの操作可能性を明記 |
 | `research/2026-10-11-flybook-sixteen-days/` | ブロック 22,703,390-25,417,000（状態は 25,417,000 に固定；すべての検定は 25,009,800 以後の区間で） | CS-009 の法則をそのセンサス後 2.39 日のサンプル外で検定：裁定 11 件（11/11）、プライミング 11 件（5/5 対 0/6）、子 9（9/9；傾き 0.84）、思考 170 回（170/170）、破れた主張なし；世話は 2,500 OBRAIN の遠征に収斂し、59 % が子に向かい、子は毎日世話されるか全く放置されるか（休眠 7 → 10）；移転 59 件、うち 30 件がラッパー契約へ、その契約は今 67 匹を持ち、預け入れごとに取引可能なトークンを発行し、一度も刺激したことがない；170 思考中 12 が入力層外の細胞を発火、うち 1 回は裁定の中で |
+| `research/2026-11-02-flybook-three-weeks/` | ブロック 22,703,390-29,099,000（状態は 29,099,000 に固定；すべての検定は 25,417,000 以後の区間で） | 三週間の標本外検定：裁定 19 件（19/19）、子 12 個体（12/12）、蛹の選択 7 件（7/7）、思考 558 回（558/558）、時計 418 個（418/418）、破れた恒等式なし；創始個体の最初の窓が 10 月 26 日から閉じ、333 個体中 168 が休眠、いずれも 10 月 2 日以降思考されず、その持ち主は区間内に 1 回しか支払っていない；子 85 個体中 66 が休眠（diapause）、生存 19 個体は 8 人の持ち主が世話し、最初の死亡時刻は 11 月 17 日；思考は 1 日 25.8 回に減り、55 % を 3 人が支払う；ラッパーは 73 個体を保有し、いまだ一度も世話していない；558 回中 19 回が入力層外で発火 |
 
 ```bash
 python3 tools/verify_census.py        # 鎖を再走査し、センサスと比較する
@@ -213,9 +214,9 @@ python3 tools/verify_lifetable.py --check research/2026-10-07-flybook-life-table
 python3 tools/verify_clones.py --check research/2026-10-07-flybook-clone-twin/data
 python3 tools/predict_next.py --check research/2026-10-08-flybook-predictions/data
 python3 tools/verify_economy.py --check research/2026-10-08-flybook-economy/data
-python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/hub_state.py --data research/2026-10-11-flybook-sixteen-days/data --check research/2026-10-11-flybook-sixteen-days/data
-python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25009800 --check research/2026-10-11-flybook-sixteen-days/data
+python3 tools/score_register.py --register research/2026-10-08-flybook-predictions/data --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/hub_state.py --data research/2026-11-02-flybook-three-weeks/data --check research/2026-11-02-flybook-three-weeks/data
+python3 tools/verify_wrapper.py --contract 0x19ee7766b779e8a6958770cc37ee3da2695f4b85 --from 25417000 --to 29099000 --check research/2026-11-02-flybook-three-weeks/data
 ```
 
 ---
